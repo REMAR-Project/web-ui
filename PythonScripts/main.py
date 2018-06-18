@@ -1,15 +1,22 @@
+#!/usr/bin/env python3
 
 from recordClass import Short
 from recordClass import Long
 import json
 import glob
+import requests
+import os
 
-folders = "data_11_06_18/data/sightings/"
+folders = "/etc/crab/data_11_06_2018/sightings/"
 
 # glob files
-files = glob.glob('./'+folders+'/**/**/**/*.json', recursive=True)
+files = glob.glob(folders+'/**/**/**/*.json', recursive=True)
 
 print ("Total entries: " + str(len(files)))
+
+if (len(files) == 0):
+    print ("No files found")
+    exit()
 
 dataList = {}
 
@@ -34,7 +41,12 @@ for item in dataList:
         tempRecord = Long(item)
         recordsList.append(tempRecord)
 
-# re-write file
-with open("data_file.json", "w") as write_file:
-    json.dump(recordsList[0].__dict__, write_file)        
+for record in recordsList:
     
+    # serialise to json 
+    data = json.dumps(record.__dict__)
+
+    # curl to insert into clean db
+    response = requests.put('http://127.0.0.1:5984/cleancrab/'+os.path.basename(record.fileName), data=data)
+    print ("Added" + os.path.basename(record.fileName))
+
