@@ -27,7 +27,7 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Settings 1</a>
+                    <li><a href="#" id="settingsBtn"> Settings 1</a>
                     </li>
                     <li><a href="#">Settings 2</a>
                     </li>
@@ -40,10 +40,10 @@
             </div>
             <div class="x_content">
               <p class="text-muted font-13 m-b-30">                
-                The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. The core library provides the based framework upon which plug-ins can built.
+                Table shows results from both short and long versions of the application, click on the settings to change which data can be accessed.
               </p>
 
-              <table id="datatable-buttons" class="table table-striped table-bordered">
+              <table id="datatable-buttons" class="table table-striped table-bordered" width="inherit">
                 <thead>
                   <tr>
                     <th>UUID</th>
@@ -54,6 +54,15 @@
                     <th>State</th>
                     <th>County</th>
                     <th>Job</th>
+                    <th>Prominent Day</th>
+                    <th>Another Ananda</th>
+                    <th>Time of Day</th>
+                    <th>Berried Females</th>
+                    <th>Habitat</th>
+                    <th>Local Name</th>
+                    <th>Protected Area</th>
+                    <th>Additional Observations</th>
+                    <th>Submission Date</th>
                   </tr>
                 </thead>
 
@@ -68,6 +77,15 @@
                      <td>{{ entry.state }}</td>
                      <td>{{ entry.county }}</td>
                      <td>{{ entry.job }}</td>
+                     <td>{{ entry.prominent }}</td>
+                     <td>{{ entry.another }}</td>
+                     <td>{{ entry.timeofday }}</td>
+                     <td>{{ entry.berried }}</td>
+                     <td>{{ entry.habitat }}</td>
+                     <td>{{ entry.localName }}</td>
+                     <td>{{ entry.protectedArea }}</td>
+                     <td>{{ entry.additionalObs }}</td>
+                     <td>{{ entry.submission }}</td>
                     </tr>
                   {% endfor %}
                 </tbody>
@@ -88,14 +106,17 @@
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.colvis.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/datatables.net-responsive/js/dataTables.responsive.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/jszip/dist/jszip.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/pdfmake/build/pdfmake.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='tables.js') }}"></script>
 {% endblock javascripts %}

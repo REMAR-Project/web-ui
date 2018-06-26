@@ -6,6 +6,8 @@
  *     // code here
  * });
  */
+var coolTable;
+
 (function($,sr){
     // debouncing function from John Hann
     // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
@@ -2514,8 +2516,8 @@ if (typeof NProgress != 'undefined') {
 				
 				var handleDataTableButtons = function() {
 				  if ($("#datatable-buttons").length) {
-					$("#datatable-buttons").DataTable({
-					  dom: "Bfrtip",
+				    coolTable =	$("#datatable-buttons").DataTable({
+						dom: "Bfrtip",						
 					  buttons: [
 						{
 						  extend: "copy",
@@ -2537,6 +2539,10 @@ if (typeof NProgress != 'undefined') {
 						  extend: "print",
 						  className: "btn-sm"
 						},
+						{
+							extend: "colvis",
+						  className: "btn-sm"
+						}						
 					  ],
 					  responsive: true
 					});
