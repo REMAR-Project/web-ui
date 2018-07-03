@@ -31,6 +31,9 @@ class Record(object):
         self.phoneid = ''
         self.moonState = ''
 
+        # short or long (0, 1)
+        self.type = 0
+
 
     def setVars(self):
         self.uuid = self.fileDict['sightings'][0]['seen_by']
@@ -80,6 +83,8 @@ class Long(Record):
 
     def __init__(self, file):
         Record.__init__(self, file)
+        # overwrite long type
+        self.type = 1
         # q6 most prominent date
         self.prominent = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['6'])
         # q7 another seen in last 2 weeks - Y/N/IDK - Yes leads to (Lower, Similar, Higher, Idk)
