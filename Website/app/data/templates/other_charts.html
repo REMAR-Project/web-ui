@@ -7,6 +7,59 @@
 {% endblock stylesheets %}
 
 {% block content %}
+<script>
+    console.log("hello");
+    var crabData = {{ crabState|tojson|safe }};
+  
+    var max = 0,
+      min = Number.MAX_VALUE,
+      cc,
+      startColor = [200, 238, 255],
+      endColor = [0, 100, 145],
+      stateColours = {},
+      hex;
+  
+  //find maximum and minimum values
+  for (cc in crabData)
+  {
+      if (parseFloat(crabData[cc]) > max)
+      {
+          max = parseFloat(crabData[cc]);
+      }
+      if (parseFloat(crabData[cc]) < min)
+      {
+          min = parseFloat(crabData[cc]);
+      }
+  }
+
+  console.log("Max: "+max);
+  console.log("Min: "+min);
+  
+  //set colors according to values of GDP
+  for (cc in crabData)
+  {
+      if (crabData[cc] > 0)
+      {
+        stateColours[cc] = '#';
+          for (var i = 0; i<3; i++)
+          {
+              hex = Math.round(startColor[i]
+                  + (endColor[i]
+                  - startColor[i])
+                  * (crabData[cc] / (max - min))).toString(16);
+  
+              if (hex.length == 1)
+              {
+                  hex = '0'+hex;
+              }
+  
+              stateColours[cc] += (hex.length == 1 ? '0' : '') + hex;
+              //stateColours[cc] = "#ff0000"
+          }
+      }
+  }  
+  </script>
+
   <div class="right_col" role="main">
     <div class="">
       <div class="page-title">
@@ -32,7 +85,7 @@
         <div class="col-md-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Other Graph types <small> Assorted graph types</small></h2>
+              <h2>Other {{ crabStates }} Graph types <small> Assorted graph types</small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -54,13 +107,10 @@
 
               <div class="row">
                 <div class="col-md-6" style="padding: 30px">
-                  <p>USA Vector Map</p>
-                  <div id="usa_map" style="height:400px !important;"></div>
+                  <p>Map View</p>
+                  <div id="brazil_map" style="height:400px !important;"></div>
                 </div>
-                <div class="col-md-6" style="padding: 30px">
-                  <p>World Vector Map</p>
-                  <div id="world-map-gdp" style="height:400px;"></div>
-                </div>
+
               </div>
               <div class="clearfix"></div>
 
@@ -163,6 +213,7 @@
   </div>
 {% endblock content %}
 
+
 {% block javascripts %}
   {{ super() }}
   <!-- jQuery Sparklines -->
@@ -170,6 +221,7 @@
   <!-- JQVMap -->
   <script src="{{ url_for('static', filename='vendors/jqvmap/dist/jquery.vmap.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.brazil.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.usa.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
   <!-- easy-pie-chart -->
