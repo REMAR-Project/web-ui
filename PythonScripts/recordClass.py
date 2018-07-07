@@ -1,5 +1,5 @@
 # class containing data structure
-
+import re
 import json
 
 def validateAnswerLength(answer):
@@ -45,9 +45,7 @@ class Record(object):
         self.month = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['4'])
         # change date to correct format (without time)
         self.dateRange = []
-        self.formatDateRange(self.fileDict['sightings'][0]['answers'][0]['5'])
-        self.dateRange = validateAnswerLength(self.dateRange)
-        
+        self.formatDateRange(self.fileDict['sightings'][0]['answers'][0]['5'])       
 
 
     def formatYear(self):
@@ -91,10 +89,20 @@ class Long(Record):
 
     def __init__(self, file):
         Record.__init__(self, file)
+        self.setSpecVars()
+
+    def formatPDate(self):
+        try :
+            splitString = self.fileDict['sightings'][0]['answers'][0]['6'][0].split()
+            return splitString[0]
+        except :
+            return ""
+
+    def setSpecVars(self): 
         # overwrite long type
         self.type = 1
         # q6 most prominent date
-        self.prominent = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['6'])
+        self.prominent = self.formatPDate()
         # q7 another seen in last 2 weeks - Y/N/IDK - Yes leads to (Lower, Similar, Higher, Idk)
         self.another = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['7'])
         # q8 what time of day - Day, Night, Both, Idk
@@ -102,7 +110,7 @@ class Long(Record):
         # Females Berried - Y/N/IDK
         self.berried = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['9'])
         # Habitat - Multiple choice (Mangrove, Hinterland/SaltFlat, Beach, MudFlat, Other)
-        self.habitat = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['10'])
+        self.habitat = re.findall('\w+', self.fileDict['sightings'][0]['answers'][0]['10'][0])
         # State
         self.state = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['11'])
         # County
@@ -117,3 +125,6 @@ class Long(Record):
         self.additionalObs = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['16'])
         # Submission
         self.submission = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['17'])
+
+
+        

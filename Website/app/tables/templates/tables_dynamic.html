@@ -87,12 +87,34 @@
                      <td>{{ entry.year }}</td>
                      <td>{% set months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] %}
                        {{ months[entry.month] }}</td>
-                     <td>{{ entry.dateRange }}</td>
+                     <td>{% if entry.dateRange is string %}
+                           {{ entry.dateRange }}
+                          {% else %}
+                           {{ entry.dateRange|join('\n') }}
+                          {% endif %}</td>
                      <td>{{ entry.prominent }}</td>
-                     <td>{{ entry.another }}</td>
-                     <td>{{ entry.timeofday }}</td>
+                     <td>{% set ans = ["Yes", "No", "Don't Know"] %}
+                        {% set how = ["Lower", "Similar", "Higher", "Don't Know"] %} 
+                        {% if entry.another is defined %}
+                          {% if entry.another[0]|int == 0 %}
+                           {{ "Yes, " }} {{ how[entry.another[1]|int] }}
+                          {% else %}
+                           {{ ans[entry.another[0]|int] }}
+                          {% endif %}
+                        {% endif %}</td>
+                     <td>{% set times = ["Day", "Night", "Both", "Don't Know"]%}
+                       {{ times[entry.timeofday] }}
+                     </td>
                      <td>{{ entry.berried }}</td>
-                     <td>{{ entry.habitat }}</td>
+                     <td>{% set habitats = [["Manguezal","Mata","Praia","Estrada","Outro"], ["Manguezal","Apicum","Mata","Praia","Estrada","Casa","Outro"]] %}
+                       {% if entry.habitat is defined %}
+                        {% for item in entry.habitat %}
+                          {% if item == "true" %}
+                            {{ habitats[entry.species][loop.index0] }}
+                          {% endif %}
+                        {% endfor %}
+                       {% endif %}
+                     </td>
                      <td>{{ entry.state }}</td>
                      <td>{{ entry.county }}</td>
                      <td>{{ entry.localName }}</td>
