@@ -136,7 +136,7 @@
                      <td>{% if entry.job is string %}
                             {{ entry.job }}
                           {% else %}
-                            {{ "Ree " }}{{ entry.job }}
+                            {{ "Other - " + entry.job[1] }}
                           {% endif %}</td>
                      <td>{{ entry.additionalObs }}</td>
                      <td>{{ entry.submission }}</td>

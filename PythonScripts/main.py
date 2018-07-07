@@ -33,8 +33,21 @@ for file in files:
 # Create Objects for each file 
 recordsList = []
 
+states = ["Alagoas", "Amapá", "Bahia", "Ceará", "Espírito Santo", "Maranhão", "Paraná", "Paraíba", "Pará", "Pernambuco", "Piauí", "Rio Grande do Norte", "Rio de Janeiro", "Santa Catarina", "Sergipe", "São Paulo"]
+
+def validateVersionCorrect(item):
+    #check if state exists in q6 if so, definitely short (see "57591dd5-758b-4dcf-bc64-782e63687fd0" for issue)
+    try:
+        if (dataList[item]['sightings'][0]['answers'][0]['6'][0] in states):
+            return True
+        else :
+            return False
+    except:
+        print( "Version error found in " + item)
+        return False
+
 for item in dataList:
-    if (dataList[item]['sightings'][0]['answers'][0]['1'][0] == str(0)):
+    if (dataList[item]['sightings'][0]['answers'][0]['1'][0] == str(0) and validateVersionCorrect(item)):
         tempRecord = Short(item)
         recordsList.append(tempRecord)
     else :
