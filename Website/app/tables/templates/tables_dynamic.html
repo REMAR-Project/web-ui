@@ -107,19 +107,37 @@
                      </td>
                      <td>{{ entry.berried }}</td>
                      <td>{% set habitats = [["Manguezal","Mata","Praia","Estrada","Outro"], ["Manguezal","Apicum","Mata","Praia","Estrada","Casa","Outro"]] %}
-                       {% if entry.habitat is defined %}
+                      {% if entry.habitat is defined %}
                         {% for item in entry.habitat %}
                           {% if item == "true" %}
-                            {{ habitats[entry.species][loop.index0] }}
+                            {{ habitats[entry.species][loop.index0]+"\n" }}
                           {% endif %}
-                        {% endfor %}
-                       {% endif %}
+                        {% endfor %}                        
+                      {% endif %}
                      </td>
                      <td>{{ entry.state }}</td>
-                     <td>{{ entry.county }}</td>
-                     <td>{{ entry.localName }}</td>
-                     <td>{{ entry.protectedArea }}</td>
-                     <td>{{ entry.job }}</td>
+                     <td>
+                        {% if entry.county is string %}
+                          {{ entry.county }}
+                        {% else %}
+                          {{ "Other - "+ entry.county[1] }}
+                        {% endif %}
+                      </td>
+                     <td>{% if entry.localName is defined %}
+                          {{ entry.localName[0] }}
+                         {% endif %}</td>
+                     <td>{% if entry.protectedArea is defined %}
+                            {% if entry.protectedArea[0]|int == 0 %}
+                              {{ regions[entry.state]['protectedAreas']['original'][entry.protectedArea[1]|int] }}
+                            {% else %}
+                              {{ ans[entry.protectedArea[0]|int] }}
+                            {% endif %}
+                          {% endif %}</td>
+                     <td>{% if entry.job is string %}
+                            {{ entry.job }}
+                          {% else %}
+                            {{ "Ree " }}{{ entry.job }}
+                          {% endif %}</td>
                      <td>{{ entry.additionalObs }}</td>
                      <td>{{ entry.submission }}</td>
                     </tr>
