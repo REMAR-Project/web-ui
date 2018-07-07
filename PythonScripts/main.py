@@ -10,7 +10,7 @@ import os
 folders = "/etc/crab/data_11_06_2018/sightings/"
 
 # glob files
-files = glob.glob(folders+'/**/**/**/*.json', recursive=True)
+files = glob.glob(folders+'/**/**/**/*.json')
 
 print ("Total entries: " + str(len(files)))
 

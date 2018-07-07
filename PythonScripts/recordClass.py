@@ -43,7 +43,10 @@ class Record(object):
         # change year to correct format
         self.formatYear()
         self.month = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['4'])
-        self.dateRange = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['5'])
+        # change date to correct format (without time)
+        self.dateRange = []
+        self.formatDateRange(self.fileDict['sightings'][0]['answers'][0]['5'])
+        self.dateRange = validateAnswerLength(self.dateRange)
         
 
 
@@ -51,7 +54,12 @@ class Record(object):
         # change 0/1/2 into real year
         tempYear = 2016
         self.year = tempYear + self.year    
-        
+
+    def formatDateRange(self, dateRange):
+        # remove time from date ans
+        for day in dateRange:
+            splitStr = day.split()
+            self.dateRange.append(splitStr[0])
         
     def getFile(self):
         return self.fileDict

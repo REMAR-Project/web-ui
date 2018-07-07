@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    console.log("tables")
+    console.log("graphs")
 
     $('#allVersBtn').click(showAll);
 
@@ -8,7 +8,7 @@ $(document).ready(function() {
         $.fn.dataTable.ext.search.pop(); // pop first to get rid of any filters
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex ) {
-                return (data[1] === "Short");
+                return (data[1] == '0');
             });
         coolTable.draw();
         var toHide = [ 1, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -23,7 +23,7 @@ $(document).ready(function() {
         $.fn.dataTable.ext.search.pop(); // pop first to get rid of filters
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex ) {
-                return (data[1] === 'Long');
+                return (data[1] == '1');
             });
         coolTable.draw();
         coolTable.columns().visible(true);
@@ -32,7 +32,7 @@ $(document).ready(function() {
       
 })
 
-function showAll(){
+function getDaterange(picker){
     coolTable.columns().visible(true); // show all columns
     $.fn.dataTable.ext.search.pop();
     coolTable.draw();

@@ -53,17 +53,17 @@
                     <th>Species</th>
                     <th>Year</th>
                     <th>Month</th>
-                    <th>Date Range</th>
-                    <th>State</th>
-                    <th>County</th>
-                    <th>Job</th>
+                    <th>Andanda Dates</th>
                     <th>Prominent Day</th>
-                    <th>Another Ananda</th>
+                    <th>Another Andanda</th>
                     <th>Time of Day</th>
                     <th>Berried Females</th>
                     <th>Habitat</th>
+                    <th>State</th>
+                    <th>County</th>
                     <th>Local Name</th>
                     <th>Protected Area</th>
+                    <th>Profession</th>
                     <th>Additional Observations</th>
                     <th>Submission Date</th>
                   </tr>
@@ -73,21 +73,31 @@
                   {% for entry in test %}
                     <tr>
                      <td>{{ entry.uuid }}</td>
-                     <td>{{ entry.type }}</td>
-                     <td>{{ entry.species }}</td>
+                     <td>{% if entry.type == 0 %}
+                          {{ "Short" }}
+                        {% else %}
+                          {{ "Long" }}
+                        {% endif %}</td>
+                     <td>{% if entry.species == 0 %}
+                         {{ "Ucides" }}
+                       {% else %}
+                         {{ "Cardisoma" }}
+                       {% endif %}</td> 
+
                      <td>{{ entry.year }}</td>
-                     <td>{{ entry.month }}</td>
+                     <td>{% set months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] %}
+                       {{ months[entry.month] }}</td>
                      <td>{{ entry.dateRange }}</td>
-                     <td>{{ entry.state }}</td>
-                     <td>{{ entry.county }}</td>
-                     <td>{{ entry.job }}</td>
                      <td>{{ entry.prominent }}</td>
                      <td>{{ entry.another }}</td>
                      <td>{{ entry.timeofday }}</td>
                      <td>{{ entry.berried }}</td>
                      <td>{{ entry.habitat }}</td>
+                     <td>{{ entry.state }}</td>
+                     <td>{{ entry.county }}</td>
                      <td>{{ entry.localName }}</td>
                      <td>{{ entry.protectedArea }}</td>
+                     <td>{{ entry.job }}</td>
                      <td>{{ entry.additionalObs }}</td>
                      <td>{{ entry.submission }}</td>
                     </tr>
