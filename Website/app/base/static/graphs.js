@@ -64,37 +64,45 @@ function getDaterange(picker){
     pickboy = picker;
     daysBetween = Math.round(Math.abs(picker.endDate - picker.startDate)/(24*60*60*1000));
 
+    var timeInterval = "";
+    var intervalFormat = "";
+
     // if more than 30, split into months.
-    if (daysBetween < 30)
+    if (daysBetween < 32)
     {
-        return;
+      timeInterval = "day"
+      intervalFormat = "DD-MMMM"
+    }
+    else
+    {
+      timeInterval = "month"
+      intervalFormat = "MMMM-YY"
     }
 
-    var months = [];
+    var intervalLabel = [];
     
     var graphRaw = {};
 
-    //endDate.subtract(1, "month"); //Substract one month to exclude endDate itself
-
-    var month = moment(picker.startDate); // copy startDate
-    month.subtract(1, "month"); // to include start date
+    var tempDate = moment(picker.startDate); // copy startDate
+    tempDate.subtract(1, timeInterval); // to include start date
     
     // get all months in selection
-    while( month < picker.endDate )
+    do
     {
-        month.add(1, "month");
-        var monthName = month.format('MMMM-YY');
-        months.push(monthName);
+        tempDate.add(1, timeInterval).endOf(timeInterval);
+        var monthName = tempDate.format(intervalFormat);
+        intervalLabel.push(monthName);
         graphRaw[monthName] = []; // add an empty list for data
     }
+    while( tempDate < picker.endDate )
 
-    console.log(months);
+    //console.log(months);
 
     for (date in dates)
     {
       if (dates[date].isBetween(picker.startDate, picker.endDate, 'days', '[]') ){
-        console.log(dates[date].format('MMMM-YY'), " is WITHIN time");
-        graphRaw[dates[date].format('MMMM-YY')].push(records[date].type);
+        //console.log(dates[date].format('MMMM-YY'), " is WITHIN time");
+        graphRaw[dates[date].format(intervalFormat)].push(records[date].type);
       }
     }
 
@@ -102,7 +110,7 @@ function getDaterange(picker){
     var graphLongData = [];
 
     // change bar chart data
-    for (mon of months)
+    for (mon of intervalLabel)
     {
       console.log(mon);
       // for each type within month dict, check for 0 and 1 and add to list
@@ -127,7 +135,7 @@ function getDaterange(picker){
     }
 
     // update graph
-    mybarChart.data.labels = months;
+    mybarChart.data.labels = intervalLabel;
     mybarChart.data.datasets[0].data = graphShortData;
     mybarChart.data.datasets[1].data = graphLongData;
     mybarChart.update();
