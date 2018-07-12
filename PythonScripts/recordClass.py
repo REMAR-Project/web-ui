@@ -80,7 +80,7 @@ class Record(object):
                 final += temps
                 final += " "
                 
-        self.submission = parse(final)
+        self.submission = str(parse(final))
 
     def formatYear(self):
         # change 0/1/2 into real year
