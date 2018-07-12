@@ -1565,6 +1565,8 @@ if (typeof NProgress != 'undefined') {
 		function init_daterangepicker() {
 
 			if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
+			
+			if( $('#reportrange').length === 0){ return; }
 			console.log('init_daterangepicker');
 		
 			var cb = function(start, end, label) {
@@ -1573,7 +1575,7 @@ if (typeof NProgress != 'undefined') {
 			};
 
 			var optionSet1 = {
-			  startDate: moment(),
+			  startDate: '11/16/2017',
 			  endDate: moment(),
 			  minDate: '11/16/2017',
 			  maxDate: '12/31/2100',
@@ -1613,9 +1615,12 @@ if (typeof NProgress != 'undefined') {
 				firstDay: 1
 			  }
 			};
-			
-			$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+
 			$('#reportrange').daterangepicker(optionSet1, cb);
+			
+			$('#reportrange span').html($('#reportrange').data('daterangepicker').startDate.format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+
+			getDaterange($('#reportrange').data('daterangepicker'));
 			$('#reportrange').on('show.daterangepicker', function() {
 			  console.log("show event fired");
 			});
