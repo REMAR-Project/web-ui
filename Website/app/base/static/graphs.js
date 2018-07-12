@@ -2,10 +2,10 @@ $(document).ready(function() {
     
     console.log("graphs")
 
-    if ($('#mybarChart').length ){ 
+    if ($('#bothChart').length ){ 
 			  
-        var ctx = document.getElementById("mybarChart");
-        mybarChart = new Chart(ctx, {
+        var ctx = document.getElementById("bothChart");
+        bothChart = new Chart(ctx, {
           type: 'bar',
           data: {
             labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -33,7 +33,73 @@ $(document).ready(function() {
           }
         });
         
-      } 
+      }
+
+      if ($('#carChart').length ){ 
+			  
+        var ctx = document.getElementById("carChart");
+        carChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+              label: '# of Short Entries',
+              backgroundColor: "#26B99A",
+              data: [51, 30, 40, 28, 92, 50, 45]
+            }, {
+              label: '# of Long Entries',
+              backgroundColor: "#03586A",
+              data: [41, 56, 25, 48, 72, 34, 12]
+            }]
+          },
+
+          options: {
+            scales: {
+              xAxes: [{ stacked: true }],
+              yAxes: [{
+                  stacked: true,
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+        
+      }
+
+      if ($('#ucChart').length ){ 
+			  
+        var ctx = document.getElementById("ucChart");
+        ucChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+              label: '# of Short Entries',
+              backgroundColor: "#26B99A",
+              data: [51, 30, 40, 28, 92, 50, 45]
+            }, {
+              label: '# of Long Entries',
+              backgroundColor: "#03586A",
+              data: [41, 56, 25, 48, 72, 34, 12]
+            }]
+          },
+
+          options: {
+            scales: {
+              xAxes: [{ stacked: true }],
+              yAxes: [{
+                  stacked: true,
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+        
+      }
         
 
     $('#allVersBtn').click();
@@ -58,9 +124,24 @@ var dates = {};
 
 var pickboy;
 var daysBetween;
-function getDaterange(picker){
+function getDaterange(picker, flag)
+{
+    // flag sets both or either species
+    if (flag == -1)
+    {
+      mybarChart = bothChart;
+    }
+    else if (flag == 0)
+    {
+      mybarChart = ucChart;
+    }
+    else if (flag == 1)
+    {
+      mybarChart = carChart;
+    }
+    
     // get start and end date, work out best way of splitting data.
-    console.log("hello ", picker.startDate.format('MMMM D, YYYY'));
+    console.log("hello ", picker.startDate.format('MMMM D, YYYY'), flag);
     pickboy = picker;
     daysBetween = Math.round(Math.abs(picker.endDate - picker.startDate)/(24*60*60*1000));
 
@@ -100,10 +181,21 @@ function getDaterange(picker){
 
     for (date in dates)
     {
-      if (dates[date].isBetween(picker.startDate, picker.endDate, 'days', '[]') ){
-        //console.log(dates[date].format('MMMM-YY'), " is WITHIN time");
+      var speciesCheck;
+      if (flag == -1) // don't check for species so make check = flag
+      {
+        speciesCheck = flag;
+      }
+      else
+      {
+        speciesCheck = records[date].species;
+      }
+
+      if (dates[date].isBetween(picker.startDate, picker.endDate, 'days', '[]') && speciesCheck == flag){
+        console.log(dates[date].format('MMMM-YY'), " is WITHIN time");
         graphRaw[dates[date].format(intervalFormat)].push(records[date].type);
       }
+      
     }
 
     var graphShortData = [];
