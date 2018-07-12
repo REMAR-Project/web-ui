@@ -3,6 +3,7 @@ from flask import render_template
 from flask_login import login_required
 
 import requests
+import json
 import sys
 
 @blueprint.route('/index')
@@ -15,7 +16,17 @@ def index():
     
     print (dbOverview.json()['doc_count'], file=sys.stderr)
 
-    return render_template('index.html', docCount=dbOverview.json()['doc_count'])
+    # get all docs
+    myjson = requests.get('http://localhost:5984/cleancrab/_all_docs?include_docs=true')
+
+
+    # for each id, save entry
+    #print(myjson.json(), file=sys.stderr)
+    entries = []
+    for element in myjson.json()['rows']:
+        entries.append(element['doc'])
+    
+    return render_template('index.html', docCount=dbOverview.json()['doc_count'], record=entries)
 
 
 @blueprint.route('/<template>')

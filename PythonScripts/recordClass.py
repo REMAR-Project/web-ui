@@ -2,6 +2,21 @@
 import re
 import json
 
+monthDict = {}
+monthDict['jan'] = "Jan"
+monthDict['fev'] = "Feb"
+monthDict['mar'] = "Mar"
+monthDict['abr'] = "Apr"
+monthDict['mai'] = "May"
+monthDict['jun'] = "Jun"
+monthDict['jul'] = "Jul"
+monthDict['ago'] = "Aug"
+monthDict['set'] = "Sep"
+monthDict['out'] = "Oct"
+monthDict['nov'] = "Nov"
+monthDict['z'] = "Dec" # regex removes de 
+
+
 def validateAnswerLength(answer):
     if len(answer) == 1 :
         #print ("only 1 answer")
@@ -47,6 +62,24 @@ class Record(object):
         self.dateRange = []
         self.formatDateRange(self.fileDict['sightings'][0]['answers'][0]['5'])       
 
+    def formatSub(self):
+        de = re.compile('(de)')
+        temp = de.sub('', self.submission)
+        temp = temp.split(' ')
+        reg = re.compile('[a-z]+')
+        final = ""
+        for temps in temp:
+            if (reg.match(temps)):
+                try :
+                    final += monthDict[temps]
+                    final += " "
+                except :
+                    print ("Unknown date!!")
+            else :
+                final += temps
+                final += " "
+                
+        self.submission = final
 
     def formatYear(self):
         # change 0/1/2 into real year
@@ -80,7 +113,8 @@ class Short(Record):
         self.job = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['8'])
         # q9 submission
         self.submission = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['9'])
-
+        self.formatSub()
+        
     def __str__(self):
         return "I am SHORT"
         
@@ -125,6 +159,5 @@ class Long(Record):
         self.additionalObs = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['16'])
         # Submission
         self.submission = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['17'])
-
-
+        self.formatSub()
         
