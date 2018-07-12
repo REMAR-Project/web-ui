@@ -48,7 +48,7 @@ $(document).ready(function() {
 
     // get dates from records
     records.forEach((entries,index) => {
-      dates[index] = moment(Date.parse(entries.submission));
+      dates[index] = moment(entries.submission, "YYYY-MM-DD");
     });
 
 })
@@ -93,7 +93,7 @@ function getDaterange(picker){
     for (date in dates)
     {
       if (dates[date].isBetween(picker.startDate, picker.endDate, 'days', '[]') ){
-        //console.log(dates[date], " is WITHIN time");
+        console.log(dates[date].format('MMMM-YY'), " is WITHIN time");
         graphRaw[dates[date].format('MMMM-YY')].push(records[date].type);
       }
     }

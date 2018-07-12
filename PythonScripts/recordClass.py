@@ -1,6 +1,7 @@
 # class containing data structure
 import re
 import json
+from dateutil.parser import parse
 
 monthDict = {}
 monthDict['jan'] = "Jan"
@@ -79,7 +80,7 @@ class Record(object):
                 final += temps
                 final += " "
                 
-        self.submission = final
+        self.submission = parse(final)
 
     def formatYear(self):
         # change 0/1/2 into real year
