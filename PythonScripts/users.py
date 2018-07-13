@@ -10,7 +10,7 @@ class User(object):
         self.uuids = []
         self.files = []
         # generate new user id to be used in public data
-        self.generatedID = uuid.uuid1()
+        self.generatedID = str(uuid.uuid1())
 
     def addUUID(self, uuid, fileName):
         # store the uuids attached to this phone id
@@ -19,7 +19,7 @@ class User(object):
         self.files.append(fileName)
 
     def __str__(self):
-        return "I am user " + str(self.generatedID) + " - I have " + str(len(self.uuids)) + " associated uuids"
+        return "I am user " + self.generatedID + " - I have " + str(len(self.uuids)) + " associated uuids"
 
 
 phoneList = {}

@@ -54,14 +54,14 @@ class Record(object):
     def getNewUserID(self):
         uuid = self.fileDict['sightings'][0]['seen_by']
         # for each user, check for uuid 
-        for user in users.phoneList :
+        for phoneID, user in users.phoneList.items() :
             if uuid in user.uuids :
                 return user.generatedID
         
         raise ValueError("UUID not linked to any user account") 
 
     def setVars(self):
-        self.uuid = self.getNewUserID
+        self.uuid = self.getNewUserID()
         # change from list to single str/int if needed.        
         self.species = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['2'])
         self.year = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['3'])
