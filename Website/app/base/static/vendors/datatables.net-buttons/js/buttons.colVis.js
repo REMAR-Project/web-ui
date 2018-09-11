@@ -48,7 +48,7 @@ $.extend( DataTable.ext.buttons, {
 			className: 'buttons-colvis',
 			buttons: [ {
 				extend: 'columnsToggle',
-				columns: conf.columns
+				columns: conf.columns,
 			} ]
 		};
 	},

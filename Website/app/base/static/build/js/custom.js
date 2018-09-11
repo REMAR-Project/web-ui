@@ -2573,8 +2573,21 @@ if (typeof NProgress != 'undefined') {
 						},
 						{
 							extend: "colvis",
-						  className: "btn-sm"
-						}						
+							className: "btn-sm",
+							text: "Column Visibility"
+						},
+						{
+							extend: "colvisGroup",
+							className: "btn-sm",
+							text: 'Show All Columns',
+							show: ':hidden'
+						},
+						{
+							extend: "colvisGroup",
+							className: "btn-sm",
+							text: 'Hide All Columns',
+							hide: ['*']
+						}								
 					  ],
 					  responsive: true
 					});

@@ -2,6 +2,7 @@
 
 from recordClass import Short
 from recordClass import Long
+import users
 import json
 import glob
 import requests
@@ -29,6 +30,8 @@ for file in files:
     if (data['sightings'][0]['answers'][0]['0'][0] == str(1.0)): 
         dataList[file] = data
 
+# generate user ids
+users.generate()
 
 # Create Objects for each file 
 recordsList = []

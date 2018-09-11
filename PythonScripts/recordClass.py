@@ -2,6 +2,7 @@
 import re
 import json
 from dateutil.parser import parse
+import users
 
 monthDict = {}
 monthDict['jan'] = "Jan"
@@ -50,9 +51,17 @@ class Record(object):
         # short or long (0, 1)
         self.type = 0
 
+    def getNewUserID(self):
+        uuid = self.fileDict['sightings'][0]['seen_by']
+        # for each user, check for uuid 
+        for phoneID, user in users.phoneList.items() :
+            if uuid in user.uuids :
+                return user.generatedID
+        
+        raise ValueError("UUID not linked to any user account") 
 
     def setVars(self):
-        self.uuid = self.fileDict['sightings'][0]['seen_by']
+        self.uuid = self.getNewUserID()
         # change from list to single str/int if needed.        
         self.species = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['2'])
         self.year = validateAnswerLength(self.fileDict['sightings'][0]['answers'][0]['3'])
