@@ -23,10 +23,38 @@ def route_template(template):
     entries = []
     for element in myjson.json()['rows']:
         entries.append(element['doc'])
-    
+ 
+    users = {}   
+
+    # users.bob.card = ["1", "4"] (JAN, APR etc)    
+
+    for user in entries:
+        try:
+            crab = ""
+            #check what crab was spotted
+            if user["species"] == 0:
+                crab = "ucid"
+            else :
+                crab = "card"
+            
+            users[user["uuid"]][crab].append(user["month"])
+        except KeyError as error:
+            users[user["uuid"]] = {}
+            users[user["uuid"]]["card"] = []
+            users[user["uuid"]]["ucid"] = []   
+
+            crab = ""
+            if user["species"] == 0:
+                crab = "ucid"
+            else :
+                crab = "card"
+            users[user["uuid"]][crab].append(user["month"])
+
+
+
     regions = json.loads(regionjson.text, object_pairs_hook=OrderedDict)
     regDoc = regions['rows'][0]['doc']
 
-    return render_template(template + '.html', test=entries, regions=regDoc)
+    return render_template(template + '.html', test=entries, userlist=users, regions=regDoc)
 
     
