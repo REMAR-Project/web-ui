@@ -6,7 +6,8 @@
  *     // code here
  * });
  */
-var coolTable;
+var totalDataTable;
+var userDataTable;
 
 (function($,sr){
     // debouncing function from John Hann
@@ -2546,51 +2547,56 @@ if (typeof NProgress != 'undefined') {
 				if( typeof ($.fn.DataTable) === 'undefined'){ return; }
 				console.log('init_DataTables');
 				
+				var dataTableSettings = {
+					dom: "Bfrtip",						
+					buttons: [
+					{
+						extend: "copy",
+						className: "btn-sm"
+					},
+					{
+						extend: "csv",
+						className: "btn-sm"
+					},
+					{
+						extend: "excel",
+						className: "btn-sm"
+					},
+					{
+						extend: "pdfHtml5",
+						className: "btn-sm"
+					},
+					{
+						extend: "print",
+						className: "btn-sm"
+					},
+					{
+						extend: "colvis",
+						className: "btn-sm",
+						text: "Column Visibility"
+					},
+					{
+						extend: "colvisGroup",
+						className: "btn-sm",
+						text: 'Show All Columns',
+						show: ':hidden'
+					},
+					{
+						extend: "colvisGroup",
+						className: "btn-sm",
+						text: 'Hide All Columns',
+						hide: ['*']
+					}								
+					],
+					responsive: true
+				} 
+
 				var handleDataTableButtons = function() {
 				  if ($("#datatable-buttons").length) {
-				    coolTable =	$("#datatable-buttons").DataTable({
-						dom: "Bfrtip",						
-					  buttons: [
-						{
-						  extend: "copy",
-						  className: "btn-sm"
-						},
-						{
-						  extend: "csv",
-						  className: "btn-sm"
-						},
-						{
-						  extend: "excel",
-						  className: "btn-sm"
-						},
-						{
-						  extend: "pdfHtml5",
-						  className: "btn-sm"
-						},
-						{
-						  extend: "print",
-						  className: "btn-sm"
-						},
-						{
-							extend: "colvis",
-							className: "btn-sm",
-							text: "Column Visibility"
-						},
-						{
-							extend: "colvisGroup",
-							className: "btn-sm",
-							text: 'Show All Columns',
-							show: ':hidden'
-						},
-						{
-							extend: "colvisGroup",
-							className: "btn-sm",
-							text: 'Hide All Columns',
-							hide: ['*']
-						}								
-					  ],
-					  responsive: true
-					});
+				    totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
+					}
+					if ($("#useratable-buttons").length) {
+				    userDataTable =	$("#useratable-buttons").DataTable(dataTableSettings);
 				  }
 				};
 

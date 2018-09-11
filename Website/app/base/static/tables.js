@@ -10,12 +10,12 @@ $(document).ready(function() {
             function( settings, data, dataIndex ) {
                 return (data[1] === "Short");
             });
-        coolTable.draw();
+        totalDataTable.draw();
         var toHide = [ 1, 9, 10, 11, 12, 13, 14, 15, 16]
-        coolTable.columns().visible(true);
+        totalDataTable.columns().visible(true);
         for(ind of toHide)
         {
-            coolTable.column(ind).visible(false);
+            totalDataTable.column(ind).visible(false);
         }
     });
 
@@ -25,16 +25,16 @@ $(document).ready(function() {
             function( settings, data, dataIndex ) {
                 return (data[1] === 'Long');
             });
-        coolTable.draw();
-        coolTable.columns().visible(true);
-        coolTable.column(1).visible(false);
+        totalDataTable.draw();
+        totalDataTable.columns().visible(true);
+        totalDataTable.column(1).visible(false);
     });
       
 })
 
 function showAll(){
-    coolTable.columns().visible(true); // show all columns
+    totalDataTable.columns().visible(true); // show all columns
     $.fn.dataTable.ext.search.pop();
-    coolTable.draw();
+    totalDataTable.draw();
 }
 
