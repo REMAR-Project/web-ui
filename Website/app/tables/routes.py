@@ -37,7 +37,8 @@ def route_template(template):
             else :
                 crab = "card"
             
-            users[user["uuid"]][crab].append(user["month"])
+            # need to check whether usage or crab spotting 
+            users[user["uuid"]][crab].append(user["submission"])
         except KeyError as error:
             users[user["uuid"]] = {}
             users[user["uuid"]]["card"] = []
@@ -48,7 +49,7 @@ def route_template(template):
                 crab = "ucid"
             else :
                 crab = "card"
-            users[user["uuid"]][crab].append(user["month"])
+            users[user["uuid"]][crab].append(user["submission"])
 
 
 

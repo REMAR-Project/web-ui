@@ -2595,9 +2595,9 @@ if (typeof NProgress != 'undefined') {
 				  if ($("#datatable-buttons").length) {
 				    totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
 					}
-					if ($("#useratable-buttons").length) {
+				/*	if ($("#useratable-buttons").length) {
 				    userDataTable =	$("#useratable-buttons").DataTable(dataTableSettings);
-				  }
+				  }*/
 				};
 
 				TableManageButtons = function() {
