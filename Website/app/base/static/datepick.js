@@ -1,14 +1,12 @@
+var dsetting;
+var dcolumns;
+var userTableLabels = [];
+
 $(document).ready(function() {
 
-    init_daterangepicker_user();
+    dcolumns =Object.keys(userdata).map(x => ({ uuid:x, card:userdata[x].card, ucid:userdata[x].ucid}));
 
-    let columns =Object.keys(userdata).map(x => ({ uuid:x, card:userdata[x].card, ucid:userdata[x].ucid}));
-
-
-
-    console.log("wjha", userTableLabels, userdata, columns);
-
-    var dsetting = {
+    dsetting = {
         dom: "Bfrtip",						
         buttons: [
         {
@@ -50,15 +48,21 @@ $(document).ready(function() {
         }								
         ],
         responsive: true,
-        columns: userTableLabels
+        columnDefs: [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: -1 },
+            { responsivePriority: 3, targets: -2 }
+        ],
+        columns: userTableLabels,
+
     }
 
-    userDataTable =	$("#useratable-buttons").DataTable(dsetting);
-    userDataTable.clear().rows.add(columns);
-    userDataTable.draw();
-
-
+    init_daterangepicker_user();
 });
+
+function init_data_structures() {
+
+}
 
 
 function init_daterangepicker_user() {
@@ -175,8 +179,9 @@ function getDaterange(picker, flag)
 
     var intervalLabel = [];
     
-    var graphRaw = {};
+    var tableRaw = {};
 
+    console.log("init ", tableRaw);
     var tempDate = moment(picker.startDate); // copy startDate
     tempDate.subtract(1, timeInterval); // to include start date
     
@@ -186,14 +191,25 @@ function getDaterange(picker, flag)
         tempDate.add(1, timeInterval).endOf(timeInterval);
         var monthName = tempDate.format(intervalFormat);
         intervalLabel.push(monthName);
-        graphRaw[monthName] = []; // add an empty list for data
+        tableRaw[monthName] = 0; // initialise a count 
     }
     while( tempDate < picker.endDate )
 
     //console.log(months);
 
+    var newCols = [];
+
     for (user in userdata)
     {
+        //reset graph temp var
+        for(lbl in intervalLabel)
+        {
+            tableRaw[intervalLabel[lbl]] = 0;
+            //onsole.log("resetting ", lbl);
+        }
+        
+        console.log("RESET ",  JSON.stringify(tableRaw));
+
     //   if (flag == -1) // don't check for species so make check = flag
     //   {
     //     speciesCheck = flag;
@@ -213,50 +229,60 @@ function getDaterange(picker, flag)
 
             var dateStr = dateString[5] + dateString[6] + dateString[4] + dateString[8] + dateString[9] + dateString[7] + dateString[0] + dateString[1] + dateString[2] + dateString[3];
 
-            console.log(dateStr);
+            //console.log(dateStr);
 
             var dateTime = new Date(dateStr);
 
             var date = moment(dateTime);
             
-            datelist.push(dateTime);
+            //datelist.push(dateTime);
            // moment d =  date;
             if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
                 console.log(date.format('MMMM-YY'), " is WITHIN time");
-                //graphRaw[dates[date].format(intervalFormat)].push(records[date].type);
+                tableRaw[date.format(intervalFormat)]++;
             }
         }
+        console.log("data ", user, JSON.stringify(tableRaw));
+    //console.log("printing col", columns);
+
+    //dcolumns[user] = graphRaw;
+
+    var totalSel_ = 0;
+    var allTime_ = 0;
+    for (element in tableRaw)
+    {
+        totalSel_ += tableRaw[element];
     }
 
-    // var graphShortData = [];
-    // var graphLongData = [];
+    newCols.push({uuid:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_});
 
-    // // change bar chart data
-    // for (mon of intervalLabel)
-    // {
-    //   console.log(mon);
-    //   // for each type within month dict, check for 0 and 1 and add to list
-    //   var short = 0;
-    //   var long = 0;
-    //   // sum types 
-    //   for (type of graphRaw[mon])
-    //   {
-    //     if (type == 0){
-    //       short++;
-    //       //console.log("short boy");
-    //       }
-    //       else{
-    //       //console.log("long boy");
-    //       long++;
-    //       }
-    //   }
+    
+    }
 
-    //   // add to graph data vars
-    //   graphShortData.push(short);
-    //   graphLongData.push(long);
-    // }
+    userTableLabels.push({data:"uuid", title:"User ID"});
 
-    // update graph
+    console.log("printing col", newCols);
+    // grab headings 
+    for (mon of intervalLabel)
+    {
+        // month and value 
+        userTableLabels.push({data:mon, title:mon});
+    }
 
+    // add total columns
+    userTableLabels.push({data:"totalSelected", title:"Total Submissions Within Selected Time Period"});
+    userTableLabels.push({data:"allTime", title:"Total Submissions All Time"});
+
+    // redraw table
+    if ($("#useratable-buttons").length)
+    {   
+        userDataTable =	$("#useratable-buttons").DataTable(dsetting);
+    }
+    else
+    {
+
+    }
+    userDataTable.clear().rows.add(newCols);
+    userDataTable.draw();
 
 }

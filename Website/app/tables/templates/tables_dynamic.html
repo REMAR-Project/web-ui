@@ -151,7 +151,7 @@
 
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="x_panel">
+          <div class="x_panel" id="usertable">
             <div class="x_title">
               <h2>User Data Tables<small>Showing user retention.</small></h2>
 
@@ -162,11 +162,11 @@
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#useratable-buttons" id="allVersBtn">View Both Species</a>
+                    <li><a href="#usertable" id="allVersBtn">View Both Species</a>
                     </li>
-                    <li><a href="#useratable-buttons" id="shortVBtn">View Ucides Only</a>
+                    <li><a href="#usertable" id="shortVBtn">View Ucides Only</a>
                     </li>
-                    <li><a href="#useratable-buttons" id="longVBtn">View Cardisoma Only</a>
+                    <li><a href="#usertable" id="longVBtn">View Cardisoma Only</a>
                     </li>
                   </ul>
                 </li>
@@ -213,7 +213,6 @@
               </table>
 
               <script>
-                var userTableLabels = [{data:"uuid", title:"User ID"}, {data:"card", title:"card"} ];
                 var userdata = JSON.parse('{{ userlist|tojson|safe }}');
               </script>
 
