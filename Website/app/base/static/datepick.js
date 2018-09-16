@@ -1,6 +1,8 @@
 var dsetting;
 var dcolumns;
 var userTableLabels = [];
+var firstTime = true;
+var allTime_ = [];
 
 $(document).ready(function() {
 
@@ -58,6 +60,8 @@ $(document).ready(function() {
     }
 
     init_daterangepicker_user();
+
+
 });
 
 function init_data_structures() {
@@ -208,7 +212,7 @@ function getDaterange(picker, flag)
             //onsole.log("resetting ", lbl);
         }
         
-        console.log("RESET ",  JSON.stringify(tableRaw));
+        //console.log("RESET ",  JSON.stringify(tableRaw));
 
     //   if (flag == -1) // don't check for species so make check = flag
     //   {
@@ -218,8 +222,6 @@ function getDaterange(picker, flag)
     //   {
     //     speciesCheck = records[date].species;
     //   }
-
-    console.log(userdata[user].card);
 
         // for cards
         for (d in userdata[user].card)
@@ -238,30 +240,63 @@ function getDaterange(picker, flag)
             //datelist.push(dateTime);
            // moment d =  date;
             if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
-                console.log(date.format('MMMM-YY'), " is WITHIN time");
+                //console.log(date.format('MMMM-YY'), " is WITHIN time");
                 tableRaw[date.format(intervalFormat)]++;
             }
         }
-        console.log("data ", user, JSON.stringify(tableRaw));
-    //console.log("printing col", columns);
 
-    //dcolumns[user] = graphRaw;
+        // for ucid
+        for (d in userdata[user].ucid)
+        {
 
-    var totalSel_ = 0;
-    var allTime_ = 0;
-    for (element in tableRaw)
-    {
-        totalSel_ += tableRaw[element];
-    }
+            var dateString = userdata[user].ucid[d]; // in this format "YYYY-MM-DD HH:mm:ss"
 
-    newCols.push({uuid:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_});
+            var dateStr = dateString[5] + dateString[6] + dateString[4] + dateString[8] + dateString[9] + dateString[7] + dateString[0] + dateString[1] + dateString[2] + dateString[3];
+
+            //console.log(dateStr);
+
+            var dateTime = new Date(dateStr);
+
+            var date = moment(dateTime);
+            
+            //datelist.push(dateTime);
+           // moment d =  date;
+            if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
+                //console.log(date.format('MMMM-YY'), " is WITHIN time");
+                tableRaw[date.format(intervalFormat)]++;
+            }
+        }
+
 
     
+        var totalSel_ = 0;
+        for (element in tableRaw)
+        {
+            totalSel_ += tableRaw[element];
+        }
+
+        // first time total is equal to selected
+        if (firstTime === true)
+        {
+            allTime_[user] = totalSel_;
+        }
+
+        if (totalSel_ > 0)
+        {
+            newCols.push({uuid:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[user]});
+        }
     }
+    
+    if (firstTime === true)
+    {
+        console.log(JSON.stringify(newCols));
+    }
+
+    userTableLabels = [];
+    console.log(userTableLabels);
 
     userTableLabels.push({data:"uuid", title:"User ID"});
 
-    console.log("printing col", newCols);
     // grab headings 
     for (mon of intervalLabel)
     {
@@ -274,15 +309,22 @@ function getDaterange(picker, flag)
     userTableLabels.push({data:"allTime", title:"Total Submissions All Time"});
 
     // redraw table
-    if ($("#useratable-buttons").length)
+    if ($("#useratable-buttons").length && firstTime === true)
     {   
+        dsetting.columns = userTableLabels;
         userDataTable =	$("#useratable-buttons").DataTable(dsetting);
     }
     else
     {
-
+        dsetting.aoColumns = userTableLabels;
+        userDataTable.destroy();
+        $("#useratable-buttons").empty();
+        userDataTable = $("#useratable-buttons").DataTable(dsetting);
     }
+    
     userDataTable.clear().rows.add(newCols);
     userDataTable.draw();
+
+    firstTime = false;
 
 }

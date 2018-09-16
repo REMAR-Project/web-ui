@@ -54,6 +54,7 @@
                     <th>Year</th>
                     <th>Month</th>
                     <th>Andanda Dates</th>
+                    <th>Moon Phase</th>
                     <th>Prominent Day</th>
                     <th>Another Andanda</th>
                     <th>Time of Day</th>
@@ -92,6 +93,10 @@
                           {% else %}
                            {{ entry.dateRange|join('\n') }}
                           {% endif %}</td>
+                     <td>
+                       {{ entry.moonState }}
+                     </td>
+
                      <td>{{ entry.prominent }}</td>
                      <td>{% set ans = ["Yes", "No", "Don't Know"] %}
                         {% set how = ["Lower", "Similar", "Higher", "Don't Know"] %} 
