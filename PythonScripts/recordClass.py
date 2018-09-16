@@ -82,12 +82,6 @@ class Record(object):
 
         return moonSelect
 
-
-    def findMoonState(self):
-        for date in self.dateRange :
-            dateStr = date.split("/")
-            print(phase(dateStr[2], dateStr[1], dateStr[0]))
-
     def formatSub(self):
         de = re.compile('(de)')
         temp = de.sub('', self.submission)
