@@ -3,6 +3,7 @@ import re
 import json
 from dateutil.parser import parse
 import users
+import moonphase
 
 monthDict = {}
 monthDict['jan'] = "Jan"
@@ -46,7 +47,6 @@ class Record(object):
         self.setVars()
         
         self.phoneid = ''
-        self.moonState = ''
 
         # short or long (0, 1)
         self.type = 0
@@ -71,6 +71,22 @@ class Record(object):
         # change date to correct format (without time)
         self.dateRange = []
         self.formatDateRange(self.fileDict['sightings'][0]['answers'][0]['5'])       
+        self.moonState = self.findMoonState()
+
+
+    def findMoonState(self):
+        moonSelect = []
+        for date in self.dateRange :
+            dateStr = date.split("/")
+            moonSelect.append(moonphase.phase(int(dateStr[2]), int(dateStr[1]), int(dateStr[0])))
+
+        return moonSelect
+
+
+    def findMoonState(self):
+        for date in self.dateRange :
+            dateStr = date.split("/")
+            print(phase(dateStr[2], dateStr[1], dateStr[0]))
 
     def formatSub(self):
         de = re.compile('(de)')
