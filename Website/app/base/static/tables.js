@@ -11,12 +11,13 @@ $(document).ready(function() {
                 return (data[1] === "Short");
             });
         totalDataTable.draw();
-        var toHide = [ 1, 9, 10, 11, 12, 13, 14, 15, 16]
+        var toHide = [ 1, 7, 8, 9, 10, 11, 14, 15, 17];
         totalDataTable.columns().visible(true);
         for(ind of toHide)
         {
             totalDataTable.column(ind).visible(false);
         }
+        $("#alldataTableLBL").html("SHORT");
     });
 
     $("#longVBtn").click(function() {
@@ -28,6 +29,9 @@ $(document).ready(function() {
         totalDataTable.draw();
         totalDataTable.columns().visible(true);
         totalDataTable.column(1).visible(false);
+        $("#alldataTableLBL").html("LONG");
+
+
     });
       
 })
@@ -36,5 +40,5 @@ function showAll(){
     totalDataTable.columns().visible(true); // show all columns
     $.fn.dataTable.ext.search.pop();
     totalDataTable.draw();
+    $("#alldataTableLBL").html("ALL");
 }
-

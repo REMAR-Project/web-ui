@@ -2,7 +2,9 @@ var dsetting;
 var dcolumns;
 var userTableLabels = [];
 var firstTime = true;
-var allTime_ = [];
+var allTime_ = [[],[],[]];
+
+var specFlag = -1;
 
 $(document).ready(function() {
 
@@ -60,6 +62,24 @@ $(document).ready(function() {
     }
 
     init_daterangepicker_user();
+
+    $("#bothSpecBtn").click(function() {
+        specFlag = -1;
+        getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
+        $("#userdataTableLBL").html("ALL");
+    });
+
+    $("#ucidSpecBtn").click(function() {
+        specFlag = 0;
+        getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
+        $("#userdataTableLBL").html("UCIDES");
+    });
+
+    $("#cardSpecBtn").click(function() {
+        specFlag = 1;
+        getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
+        $("#userdataTableLBL").html("CARDISOMA");
+    });
 
 
 });
@@ -122,7 +142,7 @@ function init_daterangepicker_user() {
 
     $('#reportrange_user').daterangepicker(optionSet1, cb);
 
-    getDaterange($('#reportrange_user').data('daterangepicker'), 1);
+    getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
 
     $('#reportrange_user span').html($('#reportrange_user').data('daterangepicker').startDate.format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
@@ -135,7 +155,7 @@ function init_daterangepicker_user() {
     $('#reportrange_user').on('apply.daterangepicker', function(ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
         // fire graph re-draw here. 
-        getDaterange(picker, 1);
+        getDaterange(picker, specFlag);
         // array for date values between 	[gd(2012, 1, 1), 17], year mn day
     });
     $('#reportrange_user').on('cancel.daterangepicker', function(ev, picker) {
@@ -211,79 +231,93 @@ function getDaterange(picker, flag)
             tableRaw[intervalLabel[lbl]] = 0;
             //onsole.log("resetting ", lbl);
         }
+
+        var totalSel_ = 0;
         
-        //console.log("RESET ",  JSON.stringify(tableRaw));
-
-    //   if (flag == -1) // don't check for species so make check = flag
-    //   {
-    //     speciesCheck = flag;
-    //   }
-    //   else
-    //   {
-    //     speciesCheck = records[date].species;
-    //   }
-
         // for cards
-        for (d in userdata[user].card)
+        if (flag === -1 || flag === 1)
         {
+            for (d in userdata[user].card)
+            {
 
-            var dateString = userdata[user].card[d]; // in this format "YYYY-MM-DD HH:mm:ss"
+                var dateString = userdata[user].card[d]; // in this format "YYYY-MM-DD HH:mm:ss"
 
-            var dateStr = dateString[5] + dateString[6] + dateString[4] + dateString[8] + dateString[9] + dateString[7] + dateString[0] + dateString[1] + dateString[2] + dateString[3];
+                var dateStr = dateString[5] + dateString[6] + dateString[4] + dateString[8] + dateString[9] + dateString[7] + dateString[0] + dateString[1] + dateString[2] + dateString[3];
 
-            //console.log(dateStr);
+                //console.log(dateStr);
 
-            var dateTime = new Date(dateStr);
+                var dateTime = new Date(dateStr);
 
-            var date = moment(dateTime);
-            
-            //datelist.push(dateTime);
-           // moment d =  date;
-            if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
-                //console.log(date.format('MMMM-YY'), " is WITHIN time");
-                tableRaw[date.format(intervalFormat)]++;
+                var date = moment(dateTime);
+
+                //datelist.push(dateTime);
+               // moment d =  date;
+                if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
+                    //console.log(date.format('MMMM-YY'), " is WITHIN time");
+                    tableRaw[date.format(intervalFormat)]++;
+                }
+            }
+
+            var cardSel_ = 0;
+            for (element in tableRaw)
+            {
+                cardSel_ += tableRaw[element];
+            }
+            if (firstTime === true)
+            {
+                allTime_[2][user] = cardSel_;
             }
         }
 
         // for ucid
-        for (d in userdata[user].ucid)
+        if (flag === -1 || flag === 0)
         {
+            for (d in userdata[user].ucid)
+            {
 
-            var dateString = userdata[user].ucid[d]; // in this format "YYYY-MM-DD HH:mm:ss"
+                var dateString = userdata[user].ucid[d]; // in this format "YYYY-MM-DD HH:mm:ss"
 
-            var dateStr = dateString[5] + dateString[6] + dateString[4] + dateString[8] + dateString[9] + dateString[7] + dateString[0] + dateString[1] + dateString[2] + dateString[3];
+                var dateStr = dateString[5] + dateString[6] + dateString[4] + dateString[8] + dateString[9] + dateString[7] + dateString[0] + dateString[1] + dateString[2] + dateString[3];
 
-            //console.log(dateStr);
+                //console.log(dateStr);
 
-            var dateTime = new Date(dateStr);
+                var dateTime = new Date(dateStr);
 
-            var date = moment(dateTime);
+                var date = moment(dateTime);
+
+                //datelist.push(dateTime);
+               // moment d =  date;
+                if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
+                    //console.log(date.format('MMMM-YY'), " is WITHIN time");
+                    tableRaw[date.format(intervalFormat)]++;
+                }
+            }
+
+
+        
             
-            //datelist.push(dateTime);
-           // moment d =  date;
-            if (date.isBetween(picker.startDate, picker.endDate, 'days', '[]')){ //&& speciesCheck == flag){
-                //console.log(date.format('MMMM-YY'), " is WITHIN time");
-                tableRaw[date.format(intervalFormat)]++;
+            for (element in tableRaw)
+            {
+                totalSel_ += tableRaw[element];
+            }
+
+            // first time total is equal to selected
+            if (firstTime === true)
+            {
+                allTime_[0][user] = totalSel_;
+                allTime_[1][user] = totalSel_ - cardSel_;
             }
         }
 
-
-    
-        var totalSel_ = 0;
-        for (element in tableRaw)
+        if (flag === 1)
         {
-            totalSel_ += tableRaw[element];
+            totalSel_ = cardSel_;
         }
-
-        // first time total is equal to selected
-        if (firstTime === true)
-        {
-            allTime_[user] = totalSel_;
-        }
+        
 
         if (totalSel_ > 0)
         {
-            newCols.push({uuid:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[user]});
+            newCols.push({uuid:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[flag+1][user]});
         }
     }
     
