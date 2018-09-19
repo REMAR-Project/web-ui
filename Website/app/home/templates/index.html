@@ -11,25 +11,23 @@
     <!-- top tiles -->
     <div class="row tile_count">
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Entries</span>
+        <span class="count_top"><i class="fa fa-edit"></i> Total App Entries</span>
         <div class="count">{{ docCount }}</div>
-        <span class="count_bottom"><i class="green">...% </i> From last Week</span>
+      </div>
+
+      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-clock-o"></i> Total Short Version</span>
+        <div class="count green">{{ shortCount }}</div>
       </div>
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Users</span>
-        <div class="count"></div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>..% </i> From last Week</span>
+        <span class="count_top"><i class="fa fa-clock-o"></i> Total Long Version</span>
+        <div class="count">{{ longCount }}</div>
       </div>
+
       <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Short</span>
-        <div class="count green">104</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>...% </i> From last Week</span>
-      </div>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Long</span>
-        <div class="count">93</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>..% </i> From last Week</span>
-      </div>
+          <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
+          <div class="count">{{ userCount }}</div>
+        </div>
 
     </div>
     <!-- /top tiles -->

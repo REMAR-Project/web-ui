@@ -23,10 +23,20 @@ def index():
     # for each id, save entry
     #print(myjson.json(), file=sys.stderr)
     entries = []
+    users = []
+    totalCount = 0
+    longCount = 0
     for element in myjson.json()['rows']:
         entries.append(element['doc'])
-    
-    return render_template('index.html', docCount=dbOverview.json()['doc_count'], record=entries)
+        totalCount += 1
+        longCount += element['doc']['type']
+        users.append(element['doc']['uuid'])
+
+    shortCount = totalCount - longCount
+
+    userCount = len(set(users))
+
+    return render_template('index.html', docCount=dbOverview.json()['doc_count'], shortCount=shortCount, longCount=longCount, userCount=userCount, record=entries)
 
 
 @blueprint.route('/<template>')
