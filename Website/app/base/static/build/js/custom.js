@@ -2347,7 +2347,7 @@ if (typeof NProgress != 'undefined') {
 			
 			  // Pie chart
 			  if ($('#pieChart').length ){
-				  
+				  console.log("this one ");
 				  var ctx = document.getElementById("pieChart");
 				  var data = {
 					datasets: [{
