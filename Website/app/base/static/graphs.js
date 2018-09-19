@@ -99,6 +99,26 @@ $(document).ready(function() {
           }
         });        
       }
+
+      pieplug = {	afterDraw: function(professionpieChart) {
+        if (professionpieChart.data.datasets[0].data.length === 0) {
+
+          console.log("NO DATA HERE");
+          // No data is present
+          var ctx = professionpieChart.chart.ctx;
+          var width = professionpieChart.chart.width;
+          var height = professionpieChart.chart.height
+          professionpieChart.clear();
+          
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = "16px normal 'Helvetica Nueue'";
+          ctx.fillText('No data to display', width / 2, height / 2);
+          ctx.restore();
+        }
+      }
+    };
     
     // pie charts
     if ($('#professionpieChart').length ){
@@ -112,7 +132,13 @@ $(document).ready(function() {
         "#9B59B6",
         "#BDC3C7",
         "#26B99A",
-        "#3498DB"
+        "#E91E63",
+        "#D35400",
+        "#3498DB",
+        "#F4D03F",
+        "#E74C3C",
+        "#212F3D",
+        "#239B56",
         ],
         label: 'My dataset' // for legend
       }],
@@ -125,12 +151,9 @@ $(document).ready(function() {
       ]
       };
 
-      var professionpieChart = new Chart(ctx, {
+      professionpieChart = new Chart(ctx, {
       data: data,
-      type: 'pie',
-      otpions: {
-        legend: false
-      }
+      type: 'pie'
       });
       
     }
@@ -145,8 +168,6 @@ $(document).ready(function() {
 
     });
 
-    var prof
-
     // get dates from records
     records.forEach((entries,index) => {
       dates[index] = moment(entries.submission, "YYYY-MM-DD");
@@ -160,6 +181,8 @@ $(document).ready(function() {
 
 })
 
+var pieplug;
+var professionpieChart;
 var mybarChart;
 var dates = {};
 
@@ -355,6 +378,7 @@ function init_piepicker() {
 
 }
 
+
 function getDatePie(picker, flag)
 {
   // get start and end date, work out best way of splitting data.
@@ -362,17 +386,84 @@ function getDatePie(picker, flag)
   pickboy = picker;
   daysBetween = Math.round(Math.abs(picker.endDate - picker.startDate)/(24*60*60*1000));
 
+  var profSelect = {};
 
   // list of numbers by profession
-  var profSelect = {};
+
   for (date in dates)
   {
     if (dates[date].isBetween(picker.startDate, picker.endDate, 'days', '[]')){
       console.log(dates[date].format('MMMM-YY'), " is WITHIN time");
-      profSelect[dates[date]].push(records[date].prof);
-     // graphRaw[dates[date].format(intervalFormat)].push(records[date].type);
+      
+      // check if it contains other
+      var prof = records[date].job;
+
+      var profAnswers = {
+        "• I catch crabs and depend on them for my living": "Dependent",
+        "• I catch crabs only occasionally for my own consumption": "Own Consumption",
+        "• I work with crab meat processing": "Farmer",
+        "• I work with crab commercialization": "Trader",
+        "• I am a local villager and do not normally catch mangrove crabs": "Local",
+        "• I work for ICMBio": "ICMBio",
+        "• I work for IBAMA": "IBAMA",
+        "• I work in the city hall": "City Hall",
+        "• I am a researcher": "Researcher",
+        "• I do not want to specify": "Not specified",
+        "• Pego caranguejo-uçá ou guaiamum e dependo deste recurso para viver": "Dependent",
+        "• Pego caranguejo-uçá ou guaiamum apenas ocasionalmente para consumo": "Own Consumption",
+        "• Sou beneficiador de carne de caranguejo-uçá": "Farmer",
+        "• Sou comerciante de caranguejo-uçá ou guaiamum": "Trader",
+        "• Sou morador local e normalmente não pego caranguejos ou guaiamuns": "Local",
+        "• Sou funcionário do ICMBio": "ICMBio",
+        "• Sou funcionário do IBAMA": "IBAMA",
+        "• Sou servidor da Prefeitura": "City Hall",
+        "• Sou pesquisador": "Researcher",
+        "• Não quero informar": "Not specified",
+      }
+
+      //console.log("job", typeof(prof));
+      if (typeof(prof) !== "string")
+      {
+        console.log("other");
+        prof = "Other";
+      }
+      else
+      {
+        prof = profAnswers[prof];
+      }   
+
+      if (profSelect[prof] === undefined)
+      { 
+        profSelect[prof] = 1;
+      } 
+      else
+      {
+        profSelect[prof] += 1;
+      }
     }
   }
+
+  var newLabels = Object.keys(profSelect);
+  professionpieChart.data.labels = newLabels;
+
+  var data = newLabels.map((key)=>{return profSelect[key]});
+
+  professionpieChart.data.datasets[0].data = data;
+  professionpieChart.data.datasets[0].labels = newLabels;
+  professionpieChart.update();
+
+  if (professionpieChart.data.datasets[0].data.length === 0)
+  {
+    console.log("no data");
+    $("#professionpieChart").hide();
+    $("#nodata").show();
+  }
+  else
+  {
+    $("#professionpieChart").show();
+    $("#nodata").hide();
+  }
+
 
 }
 
