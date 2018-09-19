@@ -319,7 +319,7 @@ function init_piepicker() {
 
   var cb = function(start, end, label) {
     console.log(start.toISOString(), end.toISOString(), label);
-    $('#piepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+    $('#piepicker span').html(start.format('D, MMMM, YY') + ' - ' + end.format('MMMM D, YYYY'));
   };
 
   var optionSet1 = {

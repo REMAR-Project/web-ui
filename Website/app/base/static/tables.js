@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     console.log("tables")
 
+    //totalDataTable.column(18).bSearchable = false;
+
     $('#allVersBtn').click(showAll);
 
     $("#shortVBtn").click(function() {

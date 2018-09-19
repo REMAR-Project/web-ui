@@ -1601,12 +1601,10 @@ if (typeof NProgress != 'undefined') {
 			  opens: 'left',
 			  buttonClasses: ['btn btn-default'],
 			  applyClass: 'btn-small btn-primary',
-			  cancelClass: 'btn-small',
-			  format: 'DD/MM/YYYY',
+			  format: 'DD/MM/YY',
 			  separator: ' to ',
 			  locale: {
 				applyLabel: 'Submit',
-				cancelLabel: 'Clear',
 				fromLabel: 'From',
 				toLabel: 'To',
 				customRangeLabel: 'Custom',
@@ -1654,7 +1652,7 @@ if (typeof NProgress != 'undefined') {
 		  
 				var cb = function(start, end, label) {
 				  console.log(start.toISOString(), end.toISOString(), label);
-				  $('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+				  $('#reportrange_right span').html(start.format('D MMMM YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 				};
 
 				var optionSet1 = {
@@ -1683,12 +1681,10 @@ if (typeof NProgress != 'undefined') {
 					opens: 'left',
 					buttonClasses: ['btn btn-default'],
 					applyClass: 'btn-small btn-primary',
-					cancelClass: 'btn-small',
-					format: 'DD/MM/YYYY',
+					format: 'DD/MM/YY',
 					separator: ' to ',
 					locale: {
 					applyLabel: 'Submit',
-					cancelLabel: 'Clear',
 					fromLabel: 'From',
 					toLabel: 'To',
 					customRangeLabel: 'Custom',
@@ -1771,12 +1767,10 @@ if (typeof NProgress != 'undefined') {
 					opens: 'left',
 					buttonClasses: ['btn btn-default'],
 					applyClass: 'btn-small btn-primary',
-					cancelClass: 'btn-small',
-					format: 'DD/MM/YYYY',
+					format: 'DD/MM/YY',
 					separator: ' to ',
 					locale: {
 					applyLabel: 'Submit',
-					cancelLabel: 'Clear',
 					fromLabel: 'From',
 					toLabel: 'To',
 					customRangeLabel: 'Custom',
