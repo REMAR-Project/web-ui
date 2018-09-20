@@ -59,6 +59,9 @@
         if (this.element.hasClass('dropup'))
             this.drops = 'up';
 
+        // add new bool for cancel button
+        this.showRangeInputsOnCustomRangeOnly = false;
+
         this.buttonClasses = 'btn btn-sm';
         this.applyClass = 'btn-success';
         this.cancelClass = 'btn-default';
@@ -393,7 +396,18 @@
         }
 
         if ((typeof options.ranges === 'undefined' && !this.singleDatePicker) || this.alwaysShowCalendars) {
+            // remove range ul
+            this.container.find('.ranges ul').remove();
+            
             this.container.addClass('show-calendar');
+            this.showRangeInputs();
+        }
+
+        // option to bind display of range inputs to the custom range selector
+        if (typeof options.showRangeInputsOnCustomRangeOnly === 'boolean') {
+            this.showRangeInputsOnCustomRangeOnly = options.showRangeInputsOnCustomRangeOnly;
+            if (this.showRangeInputsOnCustomRangeOnly)
+                this.hideRangeInputs();
         }
 
         this.container.addClass('opens' + this.opens);
@@ -1177,15 +1191,28 @@
         },
 
         showCalendars: function() {
+            if (this.showRangeInputsOnCustomRangeOnly)
+                this.showRangeInputs();
+
             this.container.addClass('show-calendar');
             this.move();
             this.element.trigger('showCalendar.daterangepicker', this);
         },
 
         hideCalendars: function() {
+            if (this.showRangeInputsOnCustomRangeOnly)
+                this.hideRangeInputs();
             this.container.removeClass('show-calendar');
             this.element.trigger('hideCalendar.daterangepicker', this);
         },
+
+        showRangeInputs: function(){
+            this.container.find('.range_inputs').show();
+        },
+         hideRangeInputs: function(){
+            this.container.find('.range_inputs').hide();
+        },
+
 
         hoverRange: function(e) {
 

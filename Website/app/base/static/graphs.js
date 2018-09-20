@@ -321,7 +321,7 @@ function init_piepicker() {
 
   var cb = function(start, end, label) {
     console.log(start.toISOString(), end.toISOString(), label);
-    $('#piepicker span').html(start.format('D, MMMM, YY') + ' - ' + end.format('MMMM D, YYYY'));
+    $('#piepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
   };
 
   var optionSet1 = {
@@ -349,7 +349,8 @@ function init_piepicker() {
       opens: 'left',
       buttonClasses: ['btn btn-default'],
       applyClass: 'btn-small btn-primary',
-      cancelClass: 'btn-small',      
+      cancelClass: 'btn-small',     
+      showRangeInputsOnCustomRangeOnly: true, 
       separator: ' to ',
       locale: {
       format: 'DD/MM/YYYY',

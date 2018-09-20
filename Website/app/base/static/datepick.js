@@ -101,10 +101,10 @@ function init_daterangepicker_user() {
     };
 
     var optionSet1 = {
-        startDate: '11/16/2017',
+        startDate: '16/11/2017',
         endDate: moment(),
-        minDate: '11/16/2017',
-        maxDate: '12/31/2100',
+        minDate: '16/11/2017',
+        maxDate: '31/12/2100',
         dateLimit: {
         days: 720
         },
@@ -114,7 +114,7 @@ function init_daterangepicker_user() {
         timePickerIncrement: 1,
         timePicker12Hour: true,
         ranges: {
-        'All Time': ['11/16/2017', moment()],
+        'All Time': ['16/11/2017', moment()],
         'This Season': [moment().startOf('year').subtract(2, 'month').add(1, 'year'), moment().startOf('year').add(3, 'month').add(1, 'year').endOf('month')],
         'Last Season': [moment().startOf('year').subtract(2, 'month').subtract(1, 'year'), moment().startOf('year').add(3, 'month').endOf('month')],
         'This Month': [moment().startOf('month'), moment().endOf('month')],
@@ -126,10 +126,11 @@ function init_daterangepicker_user() {
         buttonClasses: ['btn btn-default'],
         applyClass: 'btn-small btn-primary',
         cancelClass: 'btn-small',
-        format: 'DD/MM/YYYY',
+        showRangeInputsOnCustomRangeOnly: true,
         separator: ' to ',
         locale: {
         applyLabel: 'Submit',
+        format: 'DD/MM/YYYY',
         cancelLabel: 'Clear',
         fromLabel: 'From',
         toLabel: 'To',
