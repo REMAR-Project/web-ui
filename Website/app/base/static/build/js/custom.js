@@ -1576,7 +1576,7 @@ if (typeof NProgress != 'undefined') {
 			};
 
 			var optionSet1 = {
-			  startDate: '11/16/2017',
+			  startDate: '16/11/2017',
 			  endDate: moment(),
 			  minDate: '11/16/2017',
 			  maxDate: '12/31/2100',
@@ -1589,7 +1589,7 @@ if (typeof NProgress != 'undefined') {
 			  timePickerIncrement: 1,
 			  timePicker12Hour: true,
 			  ranges: {
-				'All Time': ['11/16/2017', moment()],
+				'All Time': ['16/11/2017', moment()],
 				'This Season': [moment().startOf('year').subtract(2, 'month').add(1, 'year'), moment().startOf('year').add(3, 'month').add(1, 'year').endOf('month')],
 				'Last Season': [moment().startOf('year').subtract(2, 'month').subtract(1, 'year'), moment().startOf('year').add(3, 'month').endOf('month')],
 				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
@@ -1601,11 +1601,12 @@ if (typeof NProgress != 'undefined') {
 			  opens: 'left',
 			  buttonClasses: ['btn btn-default'],
 			  applyClass: 'btn-small btn-primary',
-			  format: 'DD/MM/YY',
+				showRangeInputsOnCustomRangeOnly: true,
 			  separator: ' to ',
 			  locale: {
 				applyLabel: 'Submit',
 				fromLabel: 'From',
+				format: 'DD/MM/YYYY',
 				toLabel: 'To',
 				customRangeLabel: 'Custom',
 				daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -1656,10 +1657,10 @@ if (typeof NProgress != 'undefined') {
 				};
 
 				var optionSet1 = {
-					startDate: '11/16/2017',
+					startDate: '16/11/2017',
 					endDate: moment(),
-					minDate: '11/16/2017',
-					maxDate: '12/31/2100',
+					minDate: '16/11/2017',
+					maxDate: '31/12/2100',
 					dateLimit: {
 					days: 720
 					},
@@ -1669,7 +1670,7 @@ if (typeof NProgress != 'undefined') {
 					timePickerIncrement: 1,
 					timePicker12Hour: true,
 					ranges: {
-					'All Time': ['11/16/2017', moment()],
+					'All Time': ['16/11/2017', moment()],
 					'This Season': [moment().startOf('year').subtract(2, 'month').add(1, 'year'), moment().startOf('year').add(3, 'month').add(1, 'year').endOf('month')],
 					'Last Season': [moment().startOf('year').subtract(2, 'month').subtract(1, 'year'), moment().startOf('year').add(3, 'month').endOf('month')],
 					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
@@ -1681,9 +1682,10 @@ if (typeof NProgress != 'undefined') {
 					opens: 'left',
 					buttonClasses: ['btn btn-default'],
 					applyClass: 'btn-small btn-primary',
-					format: 'DD/MM/YY',
+					showRangeInputsOnCustomRangeOnly: true,
 					separator: ' to ',
 					locale: {
+					format: 'DD/MM/YYYY',
 					applyLabel: 'Submit',
 					fromLabel: 'From',
 					toLabel: 'To',
@@ -1742,10 +1744,10 @@ if (typeof NProgress != 'undefined') {
 				};
 
 				var optionSet1 = {
-					startDate: '11/16/2017',
+					startDate: '16/11/2017',
 					endDate: moment(),
-					minDate: '11/16/2017',
-					maxDate: '12/31/2100',
+					minDate: '16/11/2017',
+					maxDate: '31/12/2100',
 					dateLimit: {
 					days: 720
 					},
@@ -1755,7 +1757,7 @@ if (typeof NProgress != 'undefined') {
 					timePickerIncrement: 1,
 					timePicker12Hour: true,
 					ranges: {
-					'All Time': ['11/16/2017', moment()],
+					'All Time': ['16/11/2017', moment()],
 					'This Season': [moment().startOf('year').subtract(2, 'month').add(1, 'year'), moment().startOf('year').add(3, 'month').add(1, 'year').endOf('month')],
 					'Last Season': [moment().startOf('year').subtract(2, 'month').subtract(1, 'year'), moment().startOf('year').add(3, 'month').endOf('month')],
 					'Last 7 Days': [moment().subtract(6, 'days'), moment()],
@@ -1767,9 +1769,10 @@ if (typeof NProgress != 'undefined') {
 					opens: 'left',
 					buttonClasses: ['btn btn-default'],
 					applyClass: 'btn-small btn-primary',
-					format: 'DD/MM/YY',
+					showRangeInputsOnCustomRangeOnly: true,
 					separator: ' to ',
 					locale: {
+					format: 'DD/MM/YYYY',
 					applyLabel: 'Submit',
 					fromLabel: 'From',
 					toLabel: 'To',
@@ -1831,7 +1834,7 @@ if (typeof NProgress != 'undefined') {
 			  timePicker: true,
 			  timePickerIncrement: 30,
 			  locale: {
-				format: 'MM/DD/YYYY h:mm A'
+				format: 'DD/mm/YYYY h:mm A'
 			  }
 			});
 	
