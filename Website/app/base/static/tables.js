@@ -3,9 +3,16 @@ $(document).ready(function() {
 
     console.log("tables")
 
-    //totalDataTable.column(18).bSearchable = false;
+    //totalDataTable.column(18).bSearchable = false
 
-    
+       // Setup - add a text input to each footer cell
+    $('#datatable-buttons thead th').each( function () {
+        var title = $(this).text();
+        if (title !== ""){
+        var oldhtml = $(this).html();
+        $(this).html( oldhtml + '<input type="text" placeholder="Search '+title+'" />' );
+        }
+    } );
       
 })
 

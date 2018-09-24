@@ -8,7 +8,7 @@ var specFlag = -1;
 
 $(document).ready(function() {
 
-    dcolumns =Object.keys(userdata).map(x => ({ uuid:x, card:userdata[x].card, ucid:userdata[x].ucid}));
+    dcolumns =Object.keys(userdata).map(x => ({ uuid:x, profes:userdata[x].profession, card:userdata[x].card, ucid:userdata[x].ucid}));
 
     dsetting = {
         dom: "Bfrtip",						
@@ -58,7 +58,6 @@ $(document).ready(function() {
             { responsivePriority: 3, targets: -2 }
         ],
         columns: userTableLabels,
-
     }
 
     init_daterangepicker_user();
@@ -90,19 +89,6 @@ function changeSelectorUsers() {
         getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
         $("#userdataTableLBL").html("CARDISOMA");
     }
-    
-
-    $("#").click(function() {
-
-    });
-
-    $("#").click(function() {
-
-    });
-
-    $("#cardSpecBtn").click(function() {
-
-    });
 
 }
 
@@ -336,7 +322,7 @@ function getDaterange(picker, flag)
 
         if (totalSel_ > 0)
         {
-            newCols.push({uuid:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[flag+1][user]});
+            newCols.push({uuid:user, profes:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[flag+1][user]});
         }
     }
     
@@ -349,6 +335,8 @@ function getDaterange(picker, flag)
     console.log(userTableLabels);
 
     userTableLabels.push({data:"uuid", title:"User ID"});
+    
+    userTableLabels.push({data:"profes", title:"Profession"});
 
     // grab headings 
     for (mon of intervalLabel)

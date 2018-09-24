@@ -2624,8 +2624,43 @@ if (typeof NProgress != 'undefined') {
 
 				var handleDataTableButtons = function() {
 				  if ($("#datatable-buttons").length) {
-				    totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
+						totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
+					
+						        // Apply the search
+										totalDataTable.columns().every( function () {
+											var that = this;
+							 
+											$( 'input', this.header() ).on( 'keyup change', function () {
+													if ( that.search() !== this.value ) {
+															that
+																	.search( this.value )
+																	.draw();
+													}
+											} );
+									} );
+					} /* {				initComplete: function (dataTableSettings) {
+							this.api().columns().every( function () {
+									var column = this;
+									console.log("this column is ", column[0]);
+									var select = $('<select><option value=""></option></select>')
+											.appendTo( $(column.header()) )
+											.on( 'change', function () {
+													var val = $.fn.dataTable.util.escapeRegex(
+															$(this).val()
+													);
+		
+													column
+															.search( val ? '^'+val+'$' : '', true, false )
+															.draw();
+											} );
+		
+									column.data().unique().sort().each( function ( d, j ) {
+											select.append( '<option value="'+d+'">'+d+'</option>' )
+									} );
+							} );
 					}
+					}); 
+				}
 				/*	if ($("#useratable-buttons").length) {
 				    userDataTable =	$("#useratable-buttons").DataTable(dataTableSettings);
 				  }*/
