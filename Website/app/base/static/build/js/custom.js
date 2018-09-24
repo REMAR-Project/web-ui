@@ -2585,7 +2585,41 @@ if (typeof NProgress != 'undefined') {
 						hide: ['*']
 					}								
 					],
-					responsive: true
+					columnDefs: [
+						{
+							className: 'control',
+							orderable: false,
+							targets:   0
+						},
+					{ responsivePriority: 1, targets: 3 },
+            { responsivePriority: 2, targets: 4 },
+						{ responsivePriority: 3, targets: 5 },
+						{ responsivePriority: 4, targets: 6 },
+            { responsivePriority: 5, targets: 7 },
+						{ responsivePriority: 6, targets: 13 },
+						{ responsivePriority: 7, targets: 17 },
+						{ responsivePriority: 8, targets: 19 },
+						{ responsivePriority: 9, targets: 2 },
+						{ responsivePriority: 10, targets: 1 },
+						{ responsivePriority: 11, targets: 8 },
+						{ responsivePriority: 12, targets: 9 },
+						{ responsivePriority: 13, targets: 10 },
+						{ responsivePriority: 14, targets: 11 },
+						{ responsivePriority: 15, targets: 12 },
+						{ responsivePriority: 16, targets: 14 },
+						{ responsivePriority: 17, targets: 16 },
+						{ responsivePriority: 18, targets: 15 },
+						{ responsivePriority: 19, targets: 18 }
+						
+				],
+				order: [ 1, 'asc' ],
+					responsive: {
+
+						details: {
+							type: 'column',
+							target: 'tr'
+						}
+					}
 				} 
 
 				var handleDataTableButtons = function() {

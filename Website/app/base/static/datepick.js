@@ -63,28 +63,46 @@ $(document).ready(function() {
 
     init_daterangepicker_user();
 
-    $("#bothSpecBtn").click(function() {
+});
+
+function changeSelectorUsers() {
+
+
+    
+    var selectedValue = selectVersUsers.options[selectVersUsers.selectedIndex].value;
+    console.log("changed", selectedValue);
+
+    if (selectedValue == "bothSpecBtn")
+    {
         specFlag = -1;
         getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
         $("#userdataTableLBL").html("ALL");
-    });
-
-    $("#ucidSpecBtn").click(function() {
+    }
+    else if (selectedValue == "ucidSpecBtn")
+    {
         specFlag = 0;
         getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
         $("#userdataTableLBL").html("UCIDES");
-    });
-
-    $("#cardSpecBtn").click(function() {
+    }
+    else if (selectedValue == "cardSpecBtn")
+    {
         specFlag = 1;
         getDaterange($('#reportrange_user').data('daterangepicker'), specFlag);
         $("#userdataTableLBL").html("CARDISOMA");
+    }
+    
+
+    $("#").click(function() {
+
     });
 
+    $("#").click(function() {
 
-});
+    });
 
-function init_data_structures() {
+    $("#cardSpecBtn").click(function() {
+
+    });
 
 }
 

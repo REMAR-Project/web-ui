@@ -19,60 +19,55 @@
       <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
-            <div class="x_title">
-              <h2>Data Tables<small>Tables showing <big><span id="alldataTableLBL">ALL</span></big> app data.</small></h2>
-              <ul class="nav navbar-right panel_toolbox">
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" id="allVersBtn">View All Versions</a>
-                    </li>
-                    <li><a href="#" id="shortVBtn">View Short Answers</a>
-                    </li>
-                    <li><a href="#" id="longVBtn">View Long Answers</a>
-                    </li>
-                  </ul>
-                </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-              </ul>
+            <div class="x_title"><div class="col-md-8 col-sm-12 col-xs-12">
+              <h2>Data Tables<small>Tables showing <big><span id="alldataTableLBL">ALL</span></big> app data.</small></h2></div>
+              <div class="col-md-4 col-sm-12 col-xs-12"> 
+                        <label for="tableVersion">Select an app version to view</label>
+                        <select name="selectVersion" id="selectVers" onchange="changeSelector();">
+                          <option value="shortVBtn">Short</option></a>
+                          <option selected="selected" value="allVersBtn">Both</option>
+                          <option value="longVBtn">Long</option>
+                        </select>
+                  </div>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              <p class="text-muted font-13 m-b-30">                
-                Table can show results from both short and long versions of the application, click on the settings to change which data can be accessed.
-              </p>
+              <p class="text-muted font-13 m-b-30">
+                  Table can show results from both short and long versions of the app (via ‘Search’ tab).  
+                  Click on ‘Search’ to filter dataset (paste any entries shown in fields under the columns)
+                  Click on ‘Column visibility’ to select columns shown.
+                </p>
 
               <table id="datatable-buttons" class="table table-striped table-bordered" width="inherit">
                 <thead>
                   <tr>
-                    <th>User ID</th>
-                    <th>Version</th>
-                    <th>Species</th>
-                    <th>Year</th>
-                    <th>Month</th>
-                    <th>Andanda Dates</th>
-                    <th>Moon Phase</th>
-                    <th>Prominent Day</th>
-                    <th>Another Andanda</th>
-                    <th>Time of Day</th>
-                    <th>Berried Females</th>
-                    <th>Habitat</th>
-                    <th>State</th>
-                    <th>County</th>
-                    <th>Local Name</th>
-                    <th>Protected Area</th>
-                    <th>Profession</th>
-                    <th>Additional Observations</th>
-                    <th>Submission Date</th>
+                    <th></th>
+                    <th data-priority="9">User ID</th>
+                    <th data-priority="8">Version</th>
+                    <th data-priority="1">Species</th>
+                    <th data-priority="2">Andada Year</th>
+                    <th data-priority="3">Andada Month</th>
+                    <th data-priority="">Andanda Dates</th>
+                    <th data-priority="4">Moon Phase</th>
+                    <th data-priority="10">Prominent Day</th>
+                    <th data-priority="11">Another Andanda</th>
+                    <th data-priority="12">Time of Day</th>
+                    <th data-priority="13">Berried Females</th>
+                    <th data-priority="14">Habitat</th>
+                    <th data-priority="5">State</th>
+                    <th data-priority="15">County</th>
+                    <th data-priority="17">Local Name</th>
+                    <th data-priority="16">Protected Area</th>
+                    <th data-priority="6">Profession</th>
+                    <th data-priority="18">Additional Observations</th>
+                    <th data-priority="7">Submission Date</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   {% for entry in test %}
                     <tr>
+                      <td></td>
                      <td>{{ entry.uuid }}</td>
                      <td>{% if entry.type == 0 %}
                           {{ "Short" }}
@@ -160,24 +155,14 @@
             <div class="x_title">
               <h2>User Data Tables<small>Showing <big><span id="userdataTableLBL">ALL</span></big> user retention.</small></h2>
 
-              <ul class="nav navbar-right panel_toolbox">
-
-                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#usertable" id="bothSpecBtn">View Both Species</a>
-                    </li>
-                    <li><a href="#usertable" id="ucidSpecBtn">View Ucides Only</a>
-                    </li>
-                    <li><a href="#usertable" id="cardSpecBtn">View Cardisoma Only</a>
-                    </li>
-                  </ul>
-                </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-              </ul>
+              <div class="col-md-4 col-sm-12 col-xs-12"> 
+                  <label for="tableVersion">Select a species to view</label>
+                  <select name="selectVersion" id="selectVersUsers" onchange="changeSelectorUsers();">
+                    <option value="cardSpecBtn">Cardisoma</option></a>
+                    <option selected="selected" value="bothSpecBtn">Both</option>
+                    <option value="ucidSpecBtn">Ucides</option>
+                  </select>
+            </div>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -242,7 +227,7 @@
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.colVis.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>

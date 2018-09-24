@@ -97,10 +97,15 @@ $.extend( DataTable.ext.buttons, {
 			var col = dt.columns( conf.columns );
 			var curr = col.visible();
 
+
+
 			col.visible( conf.visibility !== undefined ?
 				conf.visibility :
 				! (curr.length ? curr[0] : false )
 			);
+
+			dt.columns( conf.columns ).searchable = col.visible();
+			console.log(dt);
 		},
 		init: function ( dt, button, conf ) {
 			var that = this;
