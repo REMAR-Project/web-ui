@@ -49,25 +49,25 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th data-priority="9">User ID</th>
-                    <th data-priority="8">Version</th>
-                    <th data-priority="1">Species</th>
-                    <th data-priority="2">Andada Year</th>
-                    <th data-priority="3">Andada Month</th>
-                    <th data-priority="">Andanda Dates</th>
-                    <th data-priority="4">New Moon Larval Release</th>
-                    <th data-priority="10">Prominent Day</th>
-                    <th data-priority="11">Another Andanda</th>
-                    <th data-priority="12">Time of Day</th>
-                    <th data-priority="13">Berried Females</th>
-                    <th data-priority="14">Habitat</th>
-                    <th data-priority="5">State</th>
-                    <th data-priority="15">County</th>
-                    <th data-priority="17">Local Name</th>
-                    <th data-priority="16">Protected Area</th>
-                    <th data-priority="6">Profession</th>
-                    <th data-priority="18">Additional Observations</th>
-                    <th data-priority="7">Submission Date</th>
+                    <th>Species</th>
+                    <th>Andada Year</th>
+                    <th>Andada Month</th>
+                    <th>Moon Phase</th>
+                    <th>State</th>
+                    <th>Profession</th>
+                    <th>Submission Date</th>                    
+                    <th>Version</th>
+                    <th>User ID</th>
+                    <th>Prominent Day</th>
+                    <th>Another Andanda</th>
+                    <th>Time of Day</th>
+                    <th>Berried Females</th>
+                    <th>Habitat</th>
+                    <th>County</th>
+                    <th>Protected Area</th>
+                    <th>Local Name</th>
+                    <th>Additional Observations</th>
+                    
                   </tr>
                 </thead>
 
@@ -75,32 +75,32 @@
                   {% for entry in test %}
                     <tr>
                       <td></td>
-                     <td>{{ entry.uuid }}</td>
-                     <td>{% if entry.type == 0 %}
+                      <td>{% if entry.species == 0 %}
+                          {{ "Ucides" }}
+                        {% else %}
+                          {{ "Cardisoma" }}
+                        {% endif %}</td>
+                      <td>{{ entry.year }}</td>
+                      <td>{% set months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+                        {{ months[entry.month] }}</td>
+                      <td>
+                          {{ entry.moonState }}
+                      </td>
+                      <td>{{ entry.state }}</td>
+                      <td>{% if entry.job is string %}
+                            {{ entry.job }}
+                          {% else %}
+                            {{ "Other - " + entry.job[1]|string }}
+                          {% endif %}</td>
+                      <td>{{ entry.submission }}</td>
+                      <td>{% if entry.type == 0 %}
                           {{ "Short" }}
                         {% else %}
                           {{ "Long" }}
                         {% endif %}</td>
-                     <td>{% if entry.species == 0 %}
-                         {{ "Ucides" }}
-                       {% else %}
-                         {{ "Cardisoma" }}
-                       {% endif %}</td> 
-
-                     <td>{{ entry.year }}</td>
-                     <td>{% set months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
-                       {{ months[entry.month] }}</td>
-                     <td>{% if entry.dateRange is string %}
-                           {{ entry.dateRange }}
-                          {% else %}
-                           {{ entry.dateRange|join('\n') }}
-                          {% endif %}</td>
-                     <td>
-                       {{ entry.moonState }}
-                     </td>
-
-                     <td>{{ entry.prominent }}</td>
-                     <td>{% set ans = ["Yes", "No", "Don't Know"] %}
+                      <td>{{ entry.uuid }}</td>
+                      <td>{{ entry.prominent }}</td>
+                      <td>{% set ans = ["Yes", "No", "Don't Know"] %}
                         {% set how = ["Lower", "Similar", "Higher", "Don't Know"] %} 
                         {% if entry.another is defined %}
                           {% if entry.another[0]|int == 0 %}
@@ -109,20 +109,20 @@
                            {{ ans[entry.another[0]|int] }}
                           {% endif %}
                         {% endif %}</td>
-                     <td>{% set times = ["Day", "Night", "Both", "Don't Know"]%}
-                       {{ times[entry.timeofday] }}
-                     </td>
-                     <td>{{ entry.berried }}</td>
-                     <td>{% set habitats = [["Manguezal","Mata","Praia","Estrada","Outro"], ["Manguezal","Apicum","Mata","Praia","Estrada","Casa","Outro"]] %}
-                      {% if entry.habitat is defined %}
-                        {% for item in entry.habitat %}
-                          {% if item == "true" %}
-                            {{ habitats[entry.species][loop.index0]+"\n" }}
-                          {% endif %}
-                        {% endfor %}                        
-                      {% endif %}
-                     </td>
-                     <td>{{ entry.state }}</td>
+                      <td>{% set times = ["Day", "Night", "Both", "Don't Know"]%}
+                        {{ times[entry.timeofday] }}
+                      </td>
+                      <td>{{ entry.berried }}</td>
+                      <td>{% set habitats = [["Manguezal","Mata","Praia","Estrada","Outro"], ["Manguezal","Apicum","Mata","Praia","Estrada","Casa","Outro"]] %}
+                        {% if entry.habitat is defined %}
+                          {% for item in entry.habitat %}
+                            {% if item == "true" %}
+                              {{ habitats[entry.species][loop.index0]+"\n" }}
+                            {% endif %}
+                          {% endfor %}                        
+                        {% endif %}
+                      </td>
+                     
                      <td>
                         {% if entry.county is string %}
                           {{ entry.county }}
@@ -130,23 +130,20 @@
                           {{ "Other - "+ entry.county[1] }}
                         {% endif %}
                       </td>
-                     <td>{% if entry.localName is defined %}
-                          {{ entry.localName[0] }}
-                         {% endif %}</td>
-                     <td>{% if entry.protectedArea is defined %}
-                            {% if entry.protectedArea[0]|int == 0 %}
-                              {{ regions[entry.state]['protectedAreas']['original'][entry.protectedArea[1]|int] }}
-                            {% else %}
-                              {{ ans[entry.protectedArea[0]|int] }}
-                            {% endif %}
-                          {% endif %}</td>
-                     <td>{% if entry.job is string %}
-                            {{ entry.job }}
+                      <td>{% if entry.protectedArea is defined %}
+                          {% if entry.protectedArea[0]|int == 0 %}
+                            {{ regions[entry.state]['protectedAreas']['original'][entry.protectedArea[1]|int] }}
                           {% else %}
-                            {{ "Other - " + entry.job[1] }}
-                          {% endif %}</td>
-                     <td>{{ entry.additionalObs }}</td>
-                     <td>{{ entry.submission }}</td>
+                            {{ ans[entry.protectedArea[0]|int] }}
+                          {% endif %}
+                        {% endif %}
+                      </td>
+                      <td>{% if entry.localName is defined %}
+                          {{ entry.localName[0] }}
+                         {% endif %}
+                      </td>
+                      <td>{{ entry.additionalObs }}</td>
+
                     </tr>
                   {% endfor %}
                 </tbody>

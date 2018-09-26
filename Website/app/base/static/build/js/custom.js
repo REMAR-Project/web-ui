@@ -2590,27 +2590,7 @@ if (typeof NProgress != 'undefined') {
 							className: 'control',
 							orderable: false,
 							targets:   0
-						},
-					{ responsivePriority: 1, targets: 3 },
-            { responsivePriority: 2, targets: 4 },
-						{ responsivePriority: 3, targets: 5 },
-						{ responsivePriority: 4, targets: 6 },
-            { responsivePriority: 5, targets: 7 },
-						{ responsivePriority: 6, targets: 13 },
-						{ responsivePriority: 7, targets: 17 },
-						{ responsivePriority: 8, targets: 19 },
-						{ responsivePriority: 9, targets: 2 },
-						{ responsivePriority: 10, targets: 1 },
-						{ responsivePriority: 11, targets: 8 },
-						{ responsivePriority: 12, targets: 9 },
-						{ responsivePriority: 13, targets: 10 },
-						{ responsivePriority: 14, targets: 11 },
-						{ responsivePriority: 15, targets: 12 },
-						{ responsivePriority: 16, targets: 14 },
-						{ responsivePriority: 17, targets: 16 },
-						{ responsivePriority: 18, targets: 15 },
-						{ responsivePriority: 19, targets: 18 }
-						
+						},						
 				],
 				order: [ 1, 'asc' ],
 					responsive: {
@@ -2619,14 +2599,150 @@ if (typeof NProgress != 'undefined') {
 							type: 'column',
 							target: 'tr'
 						}
+					},
+					initComplete: function (dataTableSettings) {
+						this.api().columns().every( function () {
+								var column = this;
+								//console.log("this column is ", JSON.stringify(column[0][0]));
+								if (column[0][0] === 0 || column[0][0] === 7 || column[0][0] === 9 
+									|| column[0][0] === 10 || column[0][0] === 17)
+								{
+									console.log("Nope column! ");
+								}
+								else if (column[0][0] === 4) // moon phase has special look-up
+								{
+									console.log("moon column! ");
+									var select = $('<select><option value=""></option></select>')	
+										.appendTo( $(column.header()) )
+										.on( 'change', function () {
+												var val = $.fn.dataTable.util.escapeRegex(
+														$(this).val()
+												);
+	
+												column
+														.search( val ? '^'+val+'$' : '', true, false )
+														.draw();
+										} );
+	
+									
+										select.append( '<option value="FM-L">FM-L</option>' );
+										select.append( '<option value="FM-S">FM-S</option>' );
+										select.append( '<option value="NM-L">NM-L</option>' );
+										select.append( '<option value="NM-S">NM-S</option>' );
+								}
+								else if (column[0][0] === 6 || column[0][0] === 15) // Profession or COunty
+								{
+									// include all but not "Other"
+
+									var select = $('<select><option value=""></option></select>')
+									.appendTo( $(column.header()) )
+									.on( 'change', function () {
+											var val = $.fn.dataTable.util.escapeRegex(
+													$(this).val()
+											);
+
+											column
+													.search( val ? '^'+val : '', true, false )
+													.draw();
+									} );
+
+								column.data().unique().sort().each( function ( d, j ) {
+									if (d.includes("Other") != true)
+									{
+										select.append( '<option value="'+d+'">'+d+'</option>' )
+									}
+								} );
+
+								select.append('<option value="Other">Other</option>');
+
+								}
+								else if (column[0][0] === 14)  // Habitat
+								{
+									var select = $('<select><option value=""></option></select>')	
+									.appendTo( $(column.header()) )
+									.on( 'change', function () {
+											var val = $.fn.dataTable.util.escapeRegex(
+													$(this).val()
+											);
+
+											column
+													.search( val ? '^'+val : '', true, false )
+													.draw();
+									} );
+
+									select.append( '<option value="Manguezal">Manguezal</option>' );
+									select.append( '<option value="Apicum">Apicum</option>' );
+									select.append( '<option value="Mata">Mata</option>' );
+									select.append( '<option value="Praia">Praia</option>' );
+									select.append( '<option value="Estrada">Estrada</option>' );
+									select.append( '<option value="Casa">Casa</option>' );
+									select.append( '<option value="Outro">Outro</option>' );
+								}
+								else if (column[0][0] === 18) // additional obs
+								{
+									// include all but not "yes" differences
+
+									var select = $('<select><option value=""></option></select>')
+									.appendTo( $(column.header()) )
+									.on( 'change', function () {
+											var val = $.fn.dataTable.util.escapeRegex(
+													$(this).val()
+											);
+
+											if (val === "Sim")
+											{
+												column
+													.search(val)
+													.draw();
+											}
+											else
+											{
+												column
+												.search( val ? '^'+val : '', true, false )
+												.draw();
+											}
+									} );
+
+								column.data().unique().sort().each( function ( d, j ) {
+									if (d.includes("Sim") != true)
+									{
+										select.append( '<option value="'+d+'">'+d+'</option>' )
+									}
+								} );
+
+								select.append('<option value="Sim">Sim</option>');
+
+								}
+								
+								else
+								{
+									var select = $('<select><option value=""></option></select>')
+										.appendTo( $(column.header()) )
+										.on( 'change', function () {
+												var val = $.fn.dataTable.util.escapeRegex(
+														$(this).val()
+												);
+	
+												column
+														.search( val ? '^'+val+'$' : '', true, false )
+														.draw();
+										} );
+	
+									column.data().unique().sort().each( function ( d, j ) {
+										select.append( '<option value="'+d+'">'+d+'</option>' )
+									} );
+								}
+						} );
 					}
 				} 
 
 				var handleDataTableButtons = function() {
 				  if ($("#datatable-buttons").length) {
-						totalDataTable =	$("#datatable-buttons").DataTable(  /*dataTableSettings);
+						totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
+
+/*
 					
-						        // Apply the search
+						        // Apply the text search for some columns
 										totalDataTable.columns().every( function () {
 											var that = this;
 							 
@@ -2637,33 +2753,9 @@ if (typeof NProgress != 'undefined') {
 																	.draw();
 													}
 											} );
-									} );
-					} */ {				initComplete: function (dataTableSettings) {
-							this.api().columns().every( function () {
-									var column = this;
-									//console.log("this column is ", column[0]);
-									var select = $('<select><option value=""></option></select>')
-											.appendTo( $(column.header()) )
-											.on( 'change', function () {
-													var val = $.fn.dataTable.util.escapeRegex(
-															$(this).val()
-													);
-		
-													column
-															.search( val ? '^'+val+'$' : '', true, false )
-															.draw();
-											} );
-		
-									column.data().unique().sort().each( function ( d, j ) {
-											select.append( '<option value="'+d+'">'+d+'</option>' )
-									} );
-							} );
+									} ); */
 					}
-					}); 
-				}
-				/*	if ($("#useratable-buttons").length) {
-				    userDataTable =	$("#useratable-buttons").DataTable(dataTableSettings);
-				  }*/
+					
 				};
 
 				TableManageButtons = function() {
