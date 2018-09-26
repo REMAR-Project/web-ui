@@ -38,12 +38,12 @@
                   Click on ‘Column visibility’ to select columns shown.
                 </p>
 
-              <script>        // Setup - add a text input to each footer cell
+              <script> /*       // Setup - add a text input to each footer cell
                   $('#datatable-buttons thead th').each( function () {
                       var title = $(this).text();
                       var oldhtml = $(this).html();
                       $(this).html( oldhtml + '<input type="text" placeholder="Search '+title+'" />' );
-                  } );</script>
+                  } );*/</script>
 
               <table id="datatable-buttons" class="table table-striped table-bordered" width="inherit">
                 <thead>
@@ -55,7 +55,7 @@
                     <th data-priority="2">Andada Year</th>
                     <th data-priority="3">Andada Month</th>
                     <th data-priority="">Andanda Dates</th>
-                    <th data-priority="4">Moon Phase</th>
+                    <th data-priority="4">New Moon Larval Release</th>
                     <th data-priority="10">Prominent Day</th>
                     <th data-priority="11">Another Andanda</th>
                     <th data-priority="12">Time of Day</th>
@@ -163,8 +163,8 @@
               <h2>User Data Tables<small>Showing <big><span id="userdataTableLBL">ALL</span></big> user retention.</small></h2>
 
               <div class="col-md-4 col-sm-12 col-xs-12"> 
-                  <label for="tableVersion">Select a species to view</label>
-                  <select name="selectVersion" id="selectVersUsers" onchange="changeSelectorUsers();">
+                  <label for="tableVersionUsers">Select a species to view</label>
+                  <select name="selectVersionUsers" id="selectVersUsers" onchange="changeSelectorUsers();">
                     <option value="cardSpecBtn">Cardisoma</option></a>
                     <option selected="selected" value="bothSpecBtn">Both</option>
                     <option value="ucidSpecBtn">Ucides</option>

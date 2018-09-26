@@ -65,8 +65,6 @@ $(document).ready(function() {
 });
 
 function changeSelectorUsers() {
-
-
     
     var selectedValue = selectVersUsers.options[selectVersUsers.selectedIndex].value;
     console.log("changed", selectedValue);
@@ -322,13 +320,8 @@ function getDaterange(picker, flag)
 
         if (totalSel_ > 0)
         {
-            newCols.push({uuid:user, profes:user, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[flag+1][user]});
+            newCols.push({uuid:user, profes:userdata[user].profession, ...tableRaw, totalSelected:totalSel_, allTime:allTime_[flag+1][user]});
         }
-    }
-    
-    if (firstTime === true)
-    {
-        console.log(JSON.stringify(newCols));
     }
 
     userTableLabels = [];

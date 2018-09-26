@@ -2624,7 +2624,7 @@ if (typeof NProgress != 'undefined') {
 
 				var handleDataTableButtons = function() {
 				  if ($("#datatable-buttons").length) {
-						totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
+						totalDataTable =	$("#datatable-buttons").DataTable(  /*dataTableSettings);
 					
 						        // Apply the search
 										totalDataTable.columns().every( function () {
@@ -2638,10 +2638,10 @@ if (typeof NProgress != 'undefined') {
 													}
 											} );
 									} );
-					} /* {				initComplete: function (dataTableSettings) {
+					} */ {				initComplete: function (dataTableSettings) {
 							this.api().columns().every( function () {
 									var column = this;
-									console.log("this column is ", column[0]);
+									//console.log("this column is ", column[0]);
 									var select = $('<select><option value=""></option></select>')
 											.appendTo( $(column.header()) )
 											.on( 'change', function () {
