@@ -96,6 +96,27 @@ def route_template(template):
         users[user]["profession"] = uniquelist
 
 
+    # change moon state into categories
+    for user in entries:
+        moonSet = []
+        if (user["moonState"].__contains__("full") is True):
+            moonSet.append("FS") # full moon spawning
+
+        if (user["moonState"].__contains__("waning gibbous") is True):
+            moonSet.append("FM") # full moon mating
+        
+        if (user["moonState"].__contains__("new") is True):
+            moonSet.append("NS") # new moon spawn
+
+        if (user["moonState"].__contains__("waxing crescent") is True):
+            moonSet.append("NM") # new moon mating
+
+        
+        if (user["moonState"].__contains__("first quarter") is True or user["moonState"].__contains__("waxing gibbous") is True or user["moonState"].__contains__("last quarter") is True or user["moonState"].__contains__("waning crescent") is True):
+            moonSet.append("A") # new moon mating
+
+        user["moonState"] = moonSet
+            
 
     regions = json.loads(regionjson.text, object_pairs_hook=OrderedDict)
     regDoc = regions['rows'][0]['doc']

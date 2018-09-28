@@ -22,7 +22,6 @@ $(document).ready(function() {
             $(this).attr('placeholder',$(this).data('holder'));
         });
     } ); 
-      
 })
 
 function changeSelector()
@@ -43,6 +42,13 @@ function changeSelector()
     {
         showLong();
     }
+}
+
+function clearfilters()
+{
+    totalDataTable.search('').columns().search('').draw();
+    // reset selects
+    $('select').prop('selectedIndex', 0);
 }
 
 

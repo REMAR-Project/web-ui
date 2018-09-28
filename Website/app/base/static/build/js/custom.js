@@ -2620,20 +2620,20 @@ if (typeof NProgress != 'undefined') {
 												);
 	
 												column
-														.search( val ? '^'+val+'$' : '', true, false )
+														.search(val)
 														.draw();
 										} );
 	
 									
-										select.append( '<option value="FM-L">FM-L</option>' );
-										select.append( '<option value="FM-S">FM-S</option>' );
-										select.append( '<option value="NM-L">NM-L</option>' );
-										select.append( '<option value="NM-S">NM-S</option>' );
+										select.append( '<option value="FM">FM</option>' );
+										select.append( '<option value="FS">FS</option>' );
+										select.append( '<option value="NM">NM</option>' );
+										select.append( '<option value="NS">NS</option>' );
+										select.append( '<option value="A">A</option>' );
 								}
 								else if (column[0][0] === 6 || column[0][0] === 15) // Profession or COunty
 								{
 									// include all but not "Other"
-
 									var select = $('<select><option value=""></option></select>')
 									.appendTo( $(column.header()) )
 									.on( 'change', function () {
@@ -2681,7 +2681,6 @@ if (typeof NProgress != 'undefined') {
 								else if (column[0][0] === 18) // additional obs
 								{
 									// include all but not "yes" differences
-
 									var select = $('<select><option value=""></option></select>')
 									.appendTo( $(column.header()) )
 									.on( 'change', function () {
@@ -2732,6 +2731,10 @@ if (typeof NProgress != 'undefined') {
 										select.append( '<option value="'+d+'">'+d+'</option>' )
 									} );
 								}
+
+								
+				  // stop sort happening if clicked on select 
+    			$("select").click(function(e){ e.stopPropagation();})
 						} );
 					}
 				} 
@@ -2741,7 +2744,7 @@ if (typeof NProgress != 'undefined') {
 						totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
 
 
-					// 7 9 10 17
+
 						      // Apply the text search for some columns
 									totalDataTable.columns().every( function () {
 											var that = this;
@@ -2754,8 +2757,7 @@ if (typeof NProgress != 'undefined') {
 													}
 											} );
 									} ); 
-					}
-					
+					}				
 				};
 
 				TableManageButtons = function() {
