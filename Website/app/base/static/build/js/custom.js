@@ -2740,10 +2740,10 @@ if (typeof NProgress != 'undefined') {
 				  if ($("#datatable-buttons").length) {
 						totalDataTable =	$("#datatable-buttons").DataTable(dataTableSettings);
 
-/*
-					
-						        // Apply the text search for some columns
-										totalDataTable.columns().every( function () {
+
+					// 7 9 10 17
+						      // Apply the text search for some columns
+									totalDataTable.columns().every( function () {
 											var that = this;
 							 
 											$( 'input', this.header() ).on( 'keyup change', function () {
@@ -2753,7 +2753,7 @@ if (typeof NProgress != 'undefined') {
 																	.draw();
 													}
 											} );
-									} ); */
+									} ); 
 					}
 					
 				};
