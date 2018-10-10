@@ -34,73 +34,13 @@
             </div>
             <div class="x_content">
               
-              <p class="text-muted font-13 m-b-30">                
-                <span style="float:left;">Table can show results from both species or separately per user, click on the settings to change which data can be accessed.</span>              </p>
-
-                <div id="reportrange_date" class="pull-right" style="float:right; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                    <span></span> <b class="caret"></b>
-                  </div>
-
-
-
-                
-              <table id="datetable-buttons" class="table table-striped table-bordered" width="inherit"> 
-                <thead>
-                 <!-- <tr>
-                    <th>Dates</th>
-                    <th></th>
-                    <th></th>
-                    <th>Moons</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>Total</th>
-                  </tr> -->
-                  <tr>
-                    <th>Day</th>
-                    <th>Month</th>
-                    <th>Year</th>
-                    <th>Full Mating (FM)</th>
-                    <th>Full Spawning (FS)</th>
-                    <th>New Mating (NM)</th>
-                    <th>New Spawning (NS)</th>
-                    <th>Anomolous</th>
-                    <th>Andada Count</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {% for entry in test %}
-
-                    {% for date in entry.dateRange %}
-                      <tr>
-                        <td>{{ date }}</td>
-                        <td>{{ date }}</td>
-                        <td>{{ date }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
-                    {% endfor %}
-                  {% endfor %} 
-                </tbody>
-              </table>
-
+             
 
             </div>
           </div>
         </div>
       </div>
 
-      <script>
-        var userdata = JSON.parse('{{ userlist|tojson|safe }}');
-      </script>
 
     </div>
   </div>
@@ -127,5 +67,5 @@
   <script src="{{ url_for('static', filename='vendors/pdfmake/build/pdfmake.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendors/pdfmake/build/vfs_fonts.js') }}"></script>
 
-  <script src="{{ url_for('static', filename='dateTable.js') }}"></script>
+  <script src="{{ url_for('static', filename='tables.js') }}"></script>
 {% endblock javascripts %}
