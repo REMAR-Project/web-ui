@@ -6,7 +6,35 @@ from flask_login import login_required
 import json
 import sys #for print
 import requests
+import datetime as dt
 from collections import OrderedDict
+
+def julian(year, month, day):
+    a = (14-month)/12.0
+    y = year+4800-a
+    m = (12*a)-3+month
+    return day + (153*m+2)/5.0 + (365*y) + y/4.0 - y/100.0 + y/400.0 - 32045
+
+
+def phase(dateString):
+
+    splitDate = dateString.split("/")
+
+    day = int(splitDate[0])
+    month = int(splitDate[1])
+    year = int(splitDate[2])
+
+    p = (julian(year, month, day) - julian(2000, 1, 6)) % 29.530588853
+
+    if   p < 1.84566:  return [0, 0, 1, 0, 0, 1]
+    elif p < 5.53699:  return [0, 0, 0, 1, 0, 1]
+    elif p < 9.22831:  return [0, 0, 0, 0, 1, 1]
+    elif p < 12.91963: return [0, 0, 0, 0, 1, 1]
+    elif p < 16.61096: return [1, 0, 0, 0, 0, 1]
+    elif p < 20.30228: return [0, 1, 0, 0, 0, 1]
+    elif p < 23.99361: return [0, 0, 0, 0, 1, 1]
+    elif p < 27.68493: return [0, 0, 0, 0, 1, 1]
+    else:              return [0, 0, 1, 0, 0, 1]
 
 @blueprint.route('/<template>')
 @login_required
@@ -121,6 +149,24 @@ def route_template(template):
     regions = json.loads(regionjson.text, object_pairs_hook=OrderedDict)
     regDoc = regions['rows'][0]['doc']
 
-    return render_template(template + '.html', test=entries, userlist=users, regions=regDoc)
+    # dictionary for dates with moons
+    dateList = {}
+
+
+    
+    
+    # get dates
+    for user in entries:
+        for val in user['dateRange']:
+            try:
+                dateList[val][5] += 1
+            except KeyError as e:
+                dateList[val] = phase(val)
+
+
+    
+
+
+    return render_template(template + '.html', dates=dateList, test=entries, userlist=users, regions=regDoc)
 
     

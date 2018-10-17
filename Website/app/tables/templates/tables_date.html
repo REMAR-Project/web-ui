@@ -20,31 +20,13 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel" id="usertable">
             <div class="x_title">
-              <h2>Date Table<small>Showing <big><span id="userdataTableLBL">ALL</span></big> user retention.</small></h2>
-
-              <div class="col-md-4 col-sm-12 col-xs-12"> 
-                  <label for="tableVersionUsers">Select a species to view</label>
-                  <select name="selectVersionUsers" id="selectVersUsers" onchange="changeSelectorUsers();">
-                    <option value="cardSpecBtn">Cardisoma</option></a>
-                    <option selected="selected" value="bothSpecBtn">Both</option>
-                    <option value="ucidSpecBtn">Ucides</option>
-                  </select>
-            </div>
+              <h2>Date Table<small>Showing <big><span id="userdataTableLBL">ALL</span></big> user date entries.</small></h2>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
               
               <p class="text-muted font-13 m-b-30">                
-                <span style="float:left;">Table can show results from both species or separately per user, click on the settings to change which data can be accessed.</span>              </p>
-
-                <div id="reportrange_date" class="pull-right" style="float:right; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                    <span></span> <b class="caret"></b>
-                  </div>
-
-
-
-                
+                                
               <table id="datetable-buttons" class="table table-striped table-bordered" width="inherit"> 
                 <thead>
                  <!-- <tr>
@@ -72,23 +54,25 @@
                 </thead>
 
                 <tbody>
-                  {% for entry in test %}
+                  
 
-                    {% for date in entry.dateRange %}
-                      <tr>
-                        <td>{{ date }}</td>
-                        <td>{{ date }}</td>
-                        <td>{{ date }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    {% for date in dates %}
+                    <script> </script>
+                    <tr>
+                        <td>{{ date[0] + date[1] }}</td>
+                        <td>{{ date[3] + date[4] }}</td>
+                        <td>{{ date[6] + date[7] }}</td>
+                        <td>{{dates[date][0]}}</td>
+                        <td>{{dates[date][1]}}</td>
+                        <td>{{dates[date][2]}}</td>
+                        <td>{{dates[date][3]}}</td>
+                        <td>{{dates[date][4]}}</td>
+                        <td>{{dates[date][5]}}</td>
+                        
                         
                     </tr>
                     {% endfor %}
-                  {% endfor %} 
+                  
                 </tbody>
               </table>
 
