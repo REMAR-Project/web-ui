@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
   {{ super() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <link href="{{ url_for('static', filename='vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
@@ -57,11 +58,21 @@
                   
 
                     {% for date in dates %}
-                    <script> </script>
                     <tr>
-                        <td>{{ date[0] + date[1] }}</td>
-                        <td>{{ date[3] + date[4] }}</td>
-                        <td>{{ date[6] + date[7] }}</td>
+                      <script>var d1 = "{{date}}";
+                      split = d1.split("/");
+
+                      if (split[2].length === 2)
+                        split[2] = "20" + split[2];
+
+                      dString = split[2] + "-"+ split[1] +"-"+ split[0];
+                      var formattedDate = moment(new Date( Date.parse(dString)));
+
+                      document.write("<td>" +formattedDate.format("DD") + "</td>" +
+                        "<td>" + formattedDate.format("MMMM") + "</td>" +
+                        "<td>" + formattedDate.format("YYYY") + "</td>");
+                        </script>
+
                         <td>{{dates[date][0]}}</td>
                         <td>{{dates[date][1]}}</td>
                         <td>{{dates[date][2]}}</td>
