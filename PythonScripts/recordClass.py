@@ -78,6 +78,7 @@ class Record(object):
         moonSelect = []
         for date in self.dateRange :
             dateStr = date.split("/")
+            # day month year - 0,1,2
             moonSelect.append(moonphase.phase(int(dateStr[2]), int(dateStr[1]), int(dateStr[0])))
 
         return moonSelect

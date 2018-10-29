@@ -7,13 +7,21 @@ $(document).ready(function() {
 
        // Setup - add a text input to each footer cell
     $('#datatable-buttons thead th').each( function () {
+        					// only 7 9 10 17
         var title = $(this).text();
-        if (title !== ""){
-        var oldhtml = $(this).html();
-        $(this).html( oldhtml + '<input type="text" placeholder="Search '+title+'" />' );
+        if (title === "Submission Date" || title === "User ID" || title === "Prominent Day" || title === "Local Name"){
+            var oldhtml = $(this).html();
+            $(this).html( oldhtml + '<input type="text" placeholder=" Search '+title+'" />' );
         }
-    } );
-      
+
+        $('input').data('holder',$('input').attr('placeholder'));
+        $('input').focusin(function(){
+            $(this).attr('placeholder','');
+        });
+        $('input').focusout(function(){
+            $(this).attr('placeholder',$(this).data('holder'));
+        });
+    } ); 
 })
 
 function changeSelector()
@@ -34,6 +42,13 @@ function changeSelector()
     {
         showLong();
     }
+}
+
+function clearfilters()
+{
+    totalDataTable.search('').columns().search('').draw();
+    // reset selects
+    $('select').prop('selectedIndex', 0);
 }
 
 

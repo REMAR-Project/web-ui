@@ -1,15 +1,10 @@
 var dsetting;
+var dateDataTable;
 var dcolumns;
-var userTableLabels = [];
-var firstTime = true;
-var allTime_ = [[],[],[]];
 
 var specFlag = -1;
 
 $(document).ready(function() {
-
-    if (typeof(userdata) != undefined)
-        dcolumns =Object.keys(userdata).map(x => ({ uuid:x, profes:userdata[x].profession, card:userdata[x].card, ucid:userdata[x].ucid}));
 
     dsetting = {
         dom: "Bfrtip",						
@@ -52,18 +47,19 @@ $(document).ready(function() {
             hide: ['*']
         }								
         ],
-        responsive: true,
-        columnDefs: [
-            { responsivePriority: 1, targets: 0 },
-            { responsivePriority: 2, targets: -1 },
-            { responsivePriority: 3, targets: -2 }
-        ],
-        columns: userTableLabels,
+        responsive: true
     }
 
-    init_daterangepicker_user();
+
+    if ($("#datetable-buttons").length) {
+        dateDataTable =	$("#datetable-buttons").DataTable(dsetting);
+    }
+
+   // init_daterangepicker_user();
 
 });
+
+/*
 
 function changeSelectorUsers() {
     
@@ -362,4 +358,4 @@ function getDaterange(picker, flag)
 
     firstTime = false;
 
-}
+}*/
