@@ -58,7 +58,7 @@ class Record(object):
             if uuid in user.uuids :
                 return user.generatedID
         
-        raise ValueError("UUID " + uuid+" not linked to any user account" + str(self.fileDict)) 
+        raise ValueError("UUID " + uuid+" not linked to any user account\n"+ ) 
 
     def setVars(self):
         self.uuid = self.getNewUserID()
