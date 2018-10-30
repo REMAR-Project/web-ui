@@ -30,8 +30,13 @@ def generate() :
     # glob files
     files = glob.glob(folders+'/*.json')
 
+    folders = "/etc/crab/crabbler-web/data/users/"
+
+    files += glob.glob(folders+'*.json')
+
     print ("Total user entries: " + str(len(files)))
 
+    print (files)
     if (len(files) == 0):
         print ("No files found")
         exit()

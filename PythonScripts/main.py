@@ -8,10 +8,14 @@ import glob
 import requests
 import os
 
-folders = "/etc/crab/data_11_06_2018/sightings/"
+folders = "/etc/crab/crabbler-web/data/sightings/"
 
 # glob files
 files = glob.glob(folders+'/**/**/**/*.json')
+
+folders = "/etc/crab/data_11_06_2018/sightings/"
+
+files += glob.glob(folders+'/**/**/**/*.json')
 
 print ("Total entries: " + str(len(files)))
 
