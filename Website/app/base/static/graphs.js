@@ -312,7 +312,7 @@ function getDaterange(picker, flag)
 
 }
 
-
+var pieData;
 function init_piepicker() {
   console.log("pie picker");
   if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
@@ -393,6 +393,20 @@ function init_piepicker() {
 
 }
 
+function percentageData(og_array)
+{
+  var totalSum = og_array.reduce(function(a, b) { return a + b; }, 0);
+
+  // var i;
+  // for (i = 0; i < og_array.length; i++)
+  // { 
+  //   var percentage = Math.floor(((og_array[i]/totalSum) * 100)+0.5);
+  //   og_array[i] = percentage;
+  // }
+
+  return og_array;
+}
+
 
 function getDatePie(picker, flag)
 {
@@ -461,9 +475,10 @@ function getDatePie(picker, flag)
   var newLabels = Object.keys(profSelect);
   professionpieChart.data.labels = newLabels;
 
-  var data = newLabels.map((key)=>{return profSelect[key]});
+  pieData = newLabels.map((key)=>{return profSelect[key]});
 
-  professionpieChart.data.datasets[0].data = data;
+// change to percentage
+  professionpieChart.data.datasets[0].data = percentageData(pieData);
   professionpieChart.data.datasets[0].labels = newLabels;
   professionpieChart.update();
 
