@@ -1,0 +1,200 @@
+{% extends "base_site.html" %}
+
+{% block title %} Other Charts {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+<script>
+    console.log("hello");
+    var crabData = {{ crabState|tojson|safe }};
+  
+    var max = 0,
+      min = Number.MAX_VALUE,
+      cc,
+      startColor = [200, 238, 255],
+      endColor = [0, 100, 145],
+      stateColours = {},
+      hex;
+  
+  //find maximum and minimum values
+  for (cc in crabData)
+  {
+      if (parseFloat(crabData[cc]) > max)
+      {
+          max = parseFloat(crabData[cc]);
+      }
+      if (parseFloat(crabData[cc]) < min)
+      {
+          min = parseFloat(crabData[cc]);
+      }
+  }
+
+  console.log("Max: "+max);
+  console.log("Min: "+min);
+  
+  //set colors according to values of GDP
+  for (cc in crabData)
+  {
+      if (crabData[cc] > 0)
+      {
+        stateColours[cc] = '#';
+          for (var i = 0; i<3; i++)
+          {
+              hex = Math.round(startColor[i]
+                  + (endColor[i]
+                  - startColor[i])
+                  * (crabData[cc] / (max - min))).toString(16);
+  
+              if (hex.length == 1)
+              {
+                  hex = '0'+hex;
+              }
+  
+              stateColours[cc] += (hex.length == 1 ? '0' : '') + hex;
+              //stateColours[cc] = "#ff0000"
+          }
+      }
+  }  
+  </script>
+
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>Other Charts</h3>
+        </div>
+
+        <div class="title_right">
+          <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Other {{ crabStates }} Graph types <small> Assorted graph types</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+              <div class="row">
+                <div class="col-md-6" style="padding: 30px">
+                  <p>Map View</p>
+                  <div id="brazil_map" style="height:400px !important;"></div>
+                </div>
+
+              
+              
+
+
+             
+                <div class="col-md-6">
+                  <div class="panel panel-body">
+                    <div class="x_title">
+                      <h4>Sparkline Inline Graphs</h4>
+                    </div>
+
+                    <p>Yet another great library for inline data visualizations</p>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th style="width:20%"></th>
+                          <th style="width:50%"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>
+                            <span class="sparkline_line" style="height: 160px;">
+                                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                            </span>
+                          </th>
+                          <td>Line Graph</td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <span class="sparkline_area" style="height: 160px;">
+                                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                            </span>
+                          </th>
+                          <td>Line Area Graph</td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <span class="sparkline_bar" style="height: 160px;">
+                                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                            </span>
+                          </th>
+                          <td>Bar Graph</td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <span class="sparkline_pie" style="height: 160px;">
+                                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                            </span>
+                          </th>
+                          <td>Pie Chart</td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <span class="sparkline_discreet" style="height: 160px;">
+                                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+                                            </span>
+                          </th>
+                          <td>Discrete chart</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+
+{% block javascripts %}
+  {{ super() }}
+  <!-- jQuery Sparklines -->
+  <script src="{{ url_for('static', filename='vendors/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
+  <!-- JQVMap -->
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/jquery.vmap.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.brazil.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/dist/maps/jquery.vmap.usa.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
+  <!-- easy-pie-chart -->
+  <script src="{{ url_for('static', filename='vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') }}"></script>
+{% endblock javascripts %}
