@@ -1,4 +1,6 @@
-# REMAR-Data project
+# REMAR: Web UI
+
+This is a web-application that has been developed for online analysis of data collected from the [REMAR Android Application](https://github.com/REMAR-Project/android-app). This is part of a citizen science based research project that is concerned with the sustainable fishing and conservation of Mangrove Crabs in Brazil.
 
 ## Server commands
 
